@@ -1,0 +1,76 @@
+.formWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--color-scale-4);
+    font-family: var(--font-geist-sans), 'Courier New', Courier, monospace;
+    background: var(--color-scale-1);
+    border-radius: .25rem;
+    outline: 1px solid var(--color-scale-3);
+    border: none;
+    transition: outline .2s ease;
+}
+
+.input:focus {
+    outline-color: var(--color-scale-4);
+}
+
+.input::placeholder {
+    color: var(--color-scale-3);
+}
+
+.buttonWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-geist-sans), 'Courier New', Courier, monospace;
+    background-color: var(--color-scale-1);
+    border: none;
+    border-radius: .25rem;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.buttonText {
+    color: var(--color-scale-3);
+}
+
+.button:hover > .buttonText {
+    background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient {
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(to right, var(--color-scale-2) 0%, var(--color-scale-3) 100%);
+    border-radius: .25rem;
+    animation: move 0s ease forwards running;
+    animation-delay: .5s
+}
+
+@keyframes move {
+    from {
+        background: linear-gradient(to right, var(--color-scale-2) 0%, var(--color-scale-3) 100%);
+    }
+
+    to {
+        background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+    }
+}

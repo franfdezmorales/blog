@@ -1,0 +1,81 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.wrapper:nth-child(3n+1) > .author  {
+    animation: changeTextColor-blue 0s ease 0s 1 normal forwards running;
+    animation-delay: .5s
+}
+
+.wrapper:nth-child(3n+2) > .author  {
+    animation: changeTextColor-green 0s ease 0s 1 normal forwards running;
+    animation-delay: .5s
+}
+
+.wrapper:nth-child(3n+3) > .author  {
+    animation: changeTextColor-pink 0s ease 0s 1 normal forwards running;
+    animation-delay: .5s
+}
+
+.author {
+    color: var(--color-scale-3);
+}
+
+.content {
+    color: var(--color-scale-4);
+}
+
+.separator {
+    position: relative;
+    flex: 1 1 0; 
+}
+
+.date {
+    color: var(--color-scale-3);
+}
+
+.separator::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 0;
+    background-color: var(--color-scale-3);
+    animation: fadeIn .5s ease 0s 1 normal forwards running;
+}
+
+@keyframes fadeIn {
+    0% {
+        background: transparent;
+    }
+    50% {
+        background: var(--color-scale-3);
+    }
+    100% {
+        width: 100%;
+        background: var(--color-scale-3);
+    }
+}
+
+@keyframes changeTextColor-blue {
+
+    100% {
+        color: var(--color-blue);
+    }
+}
+
+@keyframes changeTextColor-pink {
+
+    100% {
+        color: var(--color-pink);
+    }
+}
+
+@keyframes changeTextColor-green {
+
+    100% {
+        color: var(--color-green);
+    }
+}

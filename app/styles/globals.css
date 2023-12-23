@@ -1,0 +1,22 @@
+:root {
+  --color-scale-1: #000000;
+  --color-scale-2: #0F0F0F;
+  --color-scale-3: #4C4C4C;
+  --color-scale-4: #E0E0E0;
+  --color-scale-5: #FAFAFA;
+  --color-scale-6: #FFFFFF;
+  --color-blue: #60A5FA;
+  --color-pink: #E879F9;
+  --color-green: #5EEAD4;
+  --page-max-width: 70rem;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  background-color: var(--color-scale-1);
+}

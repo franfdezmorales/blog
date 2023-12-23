@@ -1,0 +1,46 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: var(--page-max-width);
+}
+
+.title {
+    width: fit-content;
+    font-size: 3rem;
+    font-weight: 600;
+    background: linear-gradient(to right, var(--color-scale-2) 0%, var(--color-scale-3) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 0s ease forwards running;
+    animation-delay: .5s;
+}
+
+.description {
+    font-size: 1.25rem;
+    color: var(--color-scale-4);
+}
+
+.entries {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+@keyframes fadeIn {
+    from {
+        background: linear-gradient(to right, var(--color-scale-2) 0%, var(--color-scale-3) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    to {
+        background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
