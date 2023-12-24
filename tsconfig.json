@@ -38,6 +38,9 @@
       ],
       "@types": [
         "app/types/index"
+      ],
+      "@hooks": [
+        "app/hooks/index"
       ]
     }
   },

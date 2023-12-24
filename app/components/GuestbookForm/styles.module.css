@@ -45,11 +45,16 @@
     cursor: pointer;
 }
 
+.button:disabled {
+    opacity: .75;
+    cursor: default;
+}
+
 .buttonText {
     color: var(--color-scale-3);
 }
 
-.button:hover > .buttonText {
+.button:hover>.buttonText {
     background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
     background-clip: text;
     -webkit-background-clip: text;

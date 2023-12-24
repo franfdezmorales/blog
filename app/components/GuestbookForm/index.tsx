@@ -6,12 +6,15 @@ import { useFormStatus } from 'react-dom'
 import { create } from '@lib/guestbook'
 import { Modal } from '@components/Modal'
 import { LoginButtons } from '@components/LoginButtons'
+import { ERROR_CODE } from '@types'
+import { useLocalStorage } from '@hooks'
 import styles from './styles.module.css'
 
 export const GuestbookForm: FC = (): JSX.Element => {
 
     const formRef = useRef<HTMLFormElement>(null)
     const [loginVisibility, setLoginVisibility] = useState<boolean>(false)
+    const { value: defaulFormValue, updateValue, removeValue } = useLocalStorage('entry')
     const { pending } = useFormStatus()
 
     const handleClose = () => {
@@ -21,8 +24,19 @@ export const GuestbookForm: FC = (): JSX.Element => {
     return (
         <>
             <form ref={formRef} className={styles.formWrapper} action={async (formData) => {
-                await create(formData)
-                setLoginVisibility(true)
+                const response = await create(formData)
+                if (response.errorCode === ERROR_CODE.NOT_AUTHENTICATED) {
+                    setLoginVisibility(true)
+                    const entry = formData.get('entry')?.toString() ?? ''
+                    updateValue(entry)
+                    return
+                }
+                if (response.errorCode) {
+                    console.error(response.errorMessage)
+                    return
+                }
+                formRef.current?.reset()
+                removeValue()
             }}>
                 <input
                     className={styles.input}
@@ -31,6 +45,7 @@ export const GuestbookForm: FC = (): JSX.Element => {
                     name='entry'
                     type='text'
                     maxLength={100}
+                    defaultValue={defaulFormValue}
                     required
                 />
                 <div className={styles.buttonWrapper}>
@@ -44,11 +59,11 @@ export const GuestbookForm: FC = (): JSX.Element => {
                     <div className={styles.gradient} />
                 </div>
             </form>
-            {loginVisibility ? 
-            <Modal handleClose={handleClose}>
-                <LoginButtons />
-            </Modal> 
-            : null}
+            {loginVisibility ?
+                <Modal handleClose={handleClose}>
+                    <LoginButtons />
+                </Modal>
+                : null}
         </>
     )
 }
