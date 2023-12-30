@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { Suspense, type FC } from 'react'
 import { getAllArticles, sortArticles } from "@lib/articles"
 import { Article } from '@components/Article'
 import { ArticleSorter } from '@components/ArticleSorter'
@@ -19,7 +19,9 @@ export const ArticleList: FC<Props> = async ({ sortParams }): Promise<JSX.Elemen
 
     return (
         <div className={styles.wrapper}>
-            <ArticleSorter />
+            <Suspense fallback={null}>
+                <ArticleSorter />
+            </Suspense>
             <ul className={styles.list}>
                 {sortedArticles?.map(article => (
                     <Article
