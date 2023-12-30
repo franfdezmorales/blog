@@ -138,6 +138,7 @@ export const updateVisitsFromSlug = async (slug: string): Promise<ResponseDefaul
     noStore()
     try {
         const visits = await kv.hincrby("visits", slug, 1)
+        revalidateTag('article-visits')
 
         return {
             errorCode: null,
@@ -150,7 +151,5 @@ export const updateVisitsFromSlug = async (slug: string): Promise<ResponseDefaul
             errorMessage: err as string,
             data: null
         }
-    } finally {
-        revalidateTag('article-visits')
     }
 }
