@@ -1,10 +1,9 @@
 import { ImageResponse } from 'next/og'
-import { NextRequest } from 'next/server'
 
 export const runtime = 'edge';
 
-export async function GET(req: NextRequest) {
-    const { searchParams } = req.nextUrl;
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url)
     const postTitle = searchParams.get('title');
     const bufferFont = fetch(
         new URL('../../../public/fonts/Geist-Regular.ttf', import.meta.url)
