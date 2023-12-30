@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { cache, type FC } from 'react'
 import { updateVisitsFromSlug } from '@lib/articles'
 import styles from './styles.module.css'
 
@@ -6,9 +6,11 @@ interface Props {
     slug: string
 }
 
+const incrementVisits = cache(updateVisitsFromSlug)
+
 export const UpdateVisits: FC<Props> = async ({ slug }): Promise<JSX.Element> => {
 
-    const { data: visits } = await updateVisitsFromSlug(slug)
+    const { data: visits } = await incrementVisits(slug)
 
     return (
         <span className={styles.visit}>
