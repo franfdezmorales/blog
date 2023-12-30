@@ -114,7 +114,7 @@ export const sortArticles = (articles: SimpleArticle[] | null, sortParams: { [ke
 }
 
 export const getVisitsFromSlug = cache(async (slug: string): Promise<ResponseDefault<number>> => {
-    console.log('EJECUTO ESTO')
+
     try {
         const visits = (await kv.hget('visits', slug)) ?? 0
         const typedVisits = Number(visits)
