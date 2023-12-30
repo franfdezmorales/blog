@@ -1,5 +1,5 @@
-import { ImageResponse } from 'next/og';
-import { NextRequest } from 'next/server';
+import { ImageResponse } from 'next/og'
+import { NextRequest } from 'next/server'
 
 export const runtime = 'edge';
 
@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     const postTitle = searchParams.get('title');
     const bufferFont = fetch(
         new URL('../../../public/fonts/Geist-Regular.ttf', import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    ).then(res => res.arrayBuffer());
     const fontData = await bufferFont;
 
     return new ImageResponse(
