@@ -1,4 +1,5 @@
 .main {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +8,7 @@
 .intro {
     width: 100%;
     padding: 5rem;
-    background-image:  linear-gradient(var(--color-scale-3) 1px, transparent 1px), linear-gradient(to right, var(--color-scale-3) 1px, transparent 1px);
+    background-image: linear-gradient(var(--color-scale-3) 1px, transparent 1px), linear-gradient(to right, var(--color-scale-3) 1px, transparent 1px);
     mask-image: radial-gradient(var(--color-scale-1) 50%, transparent 75%);
     -webkit-mask-image: radial-gradient(var(--color-scale-1) 50%, transparent 75%);
     background-size: 100px 100px;
@@ -16,7 +17,7 @@
 }
 
 .textIntro {
-    max-width: var(--page-max-width);
+    max-width: 70rem;
     font-size: 3rem;
     position: relative;
     color: var(--color-scale-4);
@@ -28,4 +29,15 @@
 
 .highlighted {
     background-color: var(--color-scale-1);
+}
+
+@media only screen and (max-width: 768px) {
+
+    .intro {
+        max-width: 100%;
+    }
+
+    .textIntro {
+        max-width: 100%;
+    }
 }

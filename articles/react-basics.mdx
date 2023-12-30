@@ -1,0 +1,68 @@
+---
+title: "conceptos básicos de React"
+created_at: "04/12/2022"
+---
+
+React es una librería de **Javascript**, [open-source](https://www.redhat.com/es/topics/open-source/what-is-open-source)
+desarrollada por [Meta](https://about.facebook.com/es/company-info/) y por todos sus [contribuidores](https://github.com/facebook/react/graphs/contributors).
+La función principal que tiene es **crear interfaces**. 
+
+Con el paso de los años se ha ido cada vez haciendo **más popular** y la mayoría de los sitios webs están convirtiendo sus portales a React, en sus inicios, 
+su uso se limitaba a crear **pequeños componentes**, [Pete Hunt](https://twitter.com/floydophone), un **ingeniero de Facebook** que trabajaba en el equipo de React, 
+decidió crear **Instagram Web** usando solo esta librería, demostrando lo **potente** que podía llegar a ser y que realmente servía para construir **páginas web** al completo, 
+no solo componentes.
+
+<details>
+    <summary>¿Qué es un **componente**?</summary>
+    <p>Es una función que devuelve **Javascript** ([JSX](https://es.reactjs.org/docs/introducing-jsx.html)) y permite **separar** la interfaz en diferentes **piezas independientes**.</p>
+    <p>Cada componente es **reutilizable** y su **lógica es independiente**, es decir, si en nuestra página web tenemos un componente reutilizado varias veces, 
+    el código que está ejecutando cada uno, **no tiene relación** ninguna.</p>
+</details>
+
+React trajo al mundo web diferentes conceptos: 
+    - **Memoize** (no es lo mismo que memorize)
+    - **Render**
+    - **Hook**
+    - **Props**
+    - **Keys**
+
+Realmente trajo muchos más pero de momento, vamos a tratar estos ya que son los **más básicos** y todo el mundo que escribe código con esta librería **debería de aprender**.
+
+## Memoize 
+
+En el **mundo del desarrollo**, este [concepto](https://en.wikipedia.org/wiki/Memoization) es conocido como el proceso de **guardar en caché** el **resultado** de funciones que su **ejecución** es muy **costosa** (hablando en términos de computación).
+
+En **React**, este proceso es **algo parecido**, guardamos en memoria el **proceso de renderizado**, haciendo que un componente que se podría **demorar** en cargar más de 1 segundo, lo haga en pocos milisegundos.
+
+Con esto conseguimos que la interfaz se vea **rápida** y **fluida**.
+
+## Render
+
+Es el **proceso** en el que **React pregunta a los componentes** qué quieren **mostrar** en ese momento y **crea un arbol de objetos** nuevo o **modifica** el ya existente. 
+Este arbol se conoce "popularmente" como *Virtual DOM* pero no tiene mucho sentido ese nombre ya que realmente es un valor (`string`, `array`, etc) 
+y no un objeto que genera la librería, [Dan Abramov](https://twitter.com/dan_abramov) escribió [varios tweets](https://twitter.com/dan_abramov/status/1066328666341294080?lang=en) explicando el concepto.
+
+## Hook
+
+Son las **funciones** que te permiten **manejar el estado** de tu aplicación y su **ciclo de vida**. Se introdujeron en la [versión 16.8](https://es.reactjs.org/blog/2019/02/06/react-v16.8.0.html), 
+con este cambio se produjo la **migración de clases a funciones**, algo que permitió que **componetizar** fuera mucho **más sencillo** y que realmente, el código que escribieras
+pareciera *reactivo*.
+
+## Props 
+
+Son los *"datos"* que reciben los **componentes** para **mostrarlos visualmente** o simplemente para **resolver** alguna función interna. 
+Las props son de **solo lectura**, es decir, **no se pueden editar** dentro del componente, a este concepto de **programación funcional**, 
+se le denomina, [*función pura*](https://es.wikipedia.org/wiki/Programaci%C3%B3n_funcional#Funciones_puras).
+
+## Keys 
+
+Como hemos comentado antes, los **hooks** permiten **manejar el estado** de tu aplicación, cuando algún hook **cambia** este estado, 
+el componente se **renderiza** y todo lo que hay dentro de este, se incluye en el proceso. Para hacerlo más rápido, 
+le podemos asignar una **key**, con esto conseguimos que la librería busque en el **antiguo árbol de objetos** si existe, en el caso que así sea, 
+compara ambos y si ha cambiado, **vuelve a renderizarlo**, de lo contrario, lo mantiene en su estado actual **(memoize)**. Si simplemente no existe, 
+lo guarda en el árbol para futuros renderizados.
+
+Las keys son usadas sobre todo en el renderizado de **listas**, ya que normalmente, suele ser **bastante costoso** si estas incluyen muchos datos. 
+Es **importante** que el parámetro que le pasemos a la key sea **único** y que **no cambie**, ya que de lo contrario, podría hacer que nuestra aplicación
+**no funcionara correctamente**, si un componente tiene asignada una **key** y esta **cambia**, el componente **automáticamente se renderizará** sin comprobar 
+si ha sido modificado.

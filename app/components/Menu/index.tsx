@@ -1,50 +1,50 @@
 import type { FC } from 'react'
 import Link from 'next/link'
-import { House, Article, Pen, Bookmark, GithubLogo, TwitterLogo, LinkedinLogo, Envelope, ArrowSquareOut } from '@phosphor-icons/react/dist/ssr'
+import { House, Article, Pen, GithubLogo, TwitterLogo, LinkedinLogo, Envelope, ArrowSquareOut, Aperture } from '@phosphor-icons/react/dist/ssr'
 import { ItemLink } from './Item'
 import styles from './styles.module.css'
 
 const NAVIGATION_DATA = [
     {
-        name: 'Inicio', 
-        icon: <House size={24} />, 
+        name: 'Inicio',
+        icon: <House size={24} />,
         href: '/'
-    }, 
+    },
     {
-        name: 'Artículos', 
-        icon: <Article size={24} />, 
+        name: 'Artículos',
+        icon: <Article size={24} />,
         href: '/articles'
     },
     {
-        name: 'Firmas', 
-        icon: <Pen size={24} />, 
+        name: 'Firmas',
+        icon: <Pen size={24} />,
         href: '/guestbook'
     },
     {
-        name: 'Marcadores', 
-        icon: <Bookmark size={24} />, 
-        href: '/bookmark'
+        name: 'Fotos',
+        icon: <Aperture size={24} />,
+        href: '/photos'
     },
 ]
 
 const SOCIAL_MEDIA_DATA = [
     {
-        name: 'Github', 
+        name: 'Github',
         icon: <GithubLogo size={24} />,
         href: 'https://github.com/franfdezmorales'
-    }, 
+    },
     {
-        name: 'Linkedin', 
+        name: 'Linkedin',
         icon: <LinkedinLogo size={24} />,
         href: 'https://www.linkedin.com/in/franfdezmorales/'
-    }, 
+    },
     {
-        name: 'Twitter', 
+        name: 'Twitter',
         icon: <TwitterLogo size={24} />,
         href: 'https://twitter.com/franfdezmorales'
     },
     {
-        name: 'Email', 
+        name: 'Email',
         icon: <Envelope size={24} />,
         href: 'mailto:hello@franfdezmorales.com'
     },

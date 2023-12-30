@@ -4,8 +4,14 @@
     inset: 0;
 }
 
-.cards  {
+.cards {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .cards {
+        display: none;
+    }
 }

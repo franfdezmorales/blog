@@ -1,0 +1,55 @@
+---
+title: "fuentes en CSS"
+created_at: "11/29/2022"
+---
+
+Cualquier página web en la actualidad usa **diferentes** tipos de letras, algunas son bastantes más conocidas que otras pero 
+cada vez es **más importante** usar una propia para *"distinguirse"* de otras webs.
+
+A la hora de implementar los diferentes estilos de fuentes en el código puede llevarse a cabo de manera **errónea** y provocar **problemas de rendimiento** e incluso a que
+la **implementación no sea correcta** y la fuente no se aplique correctamente a todos los estilos necesarios de nuestra aplicación.
+
+## Cómo implementar una fuente correctamente
+
+    - Primero de todo, descargaremos la fuente elegida y elegiremos si adjuntarla a nuestro proyecto de **manera local** o subirla a una **CDN propia**.
+    - Importamos la fuente en nuestro proyecto, deberemos de implementarla diferentes veces con las **propiedades necesarias** para cada estilo: 
+        ```css
+        @font-face {
+            font-family: 'iA Quattro';
+            src: url(/fonts/iAWriterQuattroV-light.ttf) format('truetype-variations');
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: 'iA Quattro';
+            src: url(/fonts/iAWriterQuattroV-medium.ttf) format('truetype-variations');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'iA Quattro';
+            src: url(/fonts/iAWriterQuattroV-bold.ttf) format('truetype-variations');
+            font-weight: 600;
+        }
+        ```
+        En el ejemplo anterior se puede ver las diferentes implementaciones dependiendo del estilo de la letra, por ejemplo, si necesitamos usar la variante 
+        *negrita*, importaremos `iAWriterQuattroV-bold.ttf`, en caso de querer usar la variante *normal*, importaremos `iAWriterQuattroV-medium.ttf`. Con esto conseguimos
+        que la fuente se implemente correctamente y se pueda leer de la manera más **nítida** posible.
+    - Por último, la implementaremos en nuestros elementos: 
+        ```css
+        font-family: 'iA Quattro', Arial, Helvetica, sans-serif;
+        ```
+
+## Errores frecuentes al implementar una fuente
+
+    - Importarla directamente de Google Fonts, actualmente los recursos que provienen del dominio de google **no se cachean** por lo que la latencia 
+    al hacer la petición hará que nuestra página **cargue mas lenta** y que nuestras métricas sean **peores**, si lo anterior no nos interesa, podemos seguir 
+    usándolo sin ningún problema.
+    - No añadir **reemplazos** en caso de que nuestra fuente no pueda ser cargada, si lo anterior ocurre, el navegador usará la **fuente por defecto** y cambiará 
+    completamente el **diseño** de nuestra web.
+    - No implementar los diferentes estilos de la fuente, esto impedirá que cuando la queramos usar con **diferentes formatos**, no se vea de la manera más *nítida*
+    impidiendo una **correcta lectura** del contenido.
+
+
+> *Si queremos mejorar el rendmiento de nuestra página al cargar las fuentes, podemos usar los siguientes consejos:*
+> - **Usar el formato .woff2**
+> - **Precarga de las fuentes críticas**
+> - **Evitar el FOIT**

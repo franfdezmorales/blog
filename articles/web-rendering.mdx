@@ -1,0 +1,119 @@
+---
+title: "renderizado web (SSR, SSG y CSR)"
+created_at: "04/15/2022"
+---
+
+Como se comentó en el [anterior post](https://franfdezmorales.com/articles/react-basics), **renderizar** es un proceso en el que se pregunta qué se debe 
+de **mostrar** en pantalla, acto seguido, se lleva a cabo. Con el paso de los años, se ha hecho bastante notorio este tema debido al abanico de posibilidades
+que tenemos.
+
+El renderizado se puede realizar en la parte del **cliente**, es decir, en nuestro **navegador** (CSR) o en la parte del **servidor** (SSR y SSG). 
+Dependiendo de las necesidades de cada proyecto, se deberá de elegir una opción, también se pueden elegir ambas en caso de que se requiera.
+
+## Renderizado en el cliente (CSR)
+
+*CSR: Client Side Rendering*
+
+Con la llegada de las **librerías y los frameworks** para la web ([React](https://es.reactjs.org/), [Vue](https://vuejs.org/), [Angular](https://angular.io/)), la manera 
+de crear páginas **cambió** de manera radical, est@s eran capaces de **convertir** **javascript** en **HTML**, consiguiendo construir páginas totalmente **dinámicas** 
+y **sincronizando** la **UI** con el **estado**. 
+
+Con lo mencionado anteriormente, surgieron las **SPAs** (Single Page Applications), una aplicación web donde todas las "páginas" se muestran en una sola, 
+sin tener que recargar el navegador.
+
+Las **SPAs** son el claro ejemplo de **CSR**, páginas webs que cuando entramos por primera vez nos devuelven una **página en blanco** y posteriormente, cuando carga
+javascript monta el árbol de HTML permitiendo su visualización.
+
+Un ejemplo para entender lo anterior sería el siguiente: 
+
+1. Entramos a la web y nos muestra una página en blanco (aún no ha cargado javascript)
+    ```html
+    <div id="root"></div>
+    ```
+
+2. Carga javascript y se monta el árbol de HTML
+    ```html
+    <div id="root">
+        <h1>Hola mundo</h1>
+        <p>Esto es una página</p>
+    </div>
+    ```
+
+### Beneficios 
+
+    - La aplicación es muy **dinámica** y **rápida** una vez que carga javascript. 
+    - No hay flashes al "cambiar" de página. 
+    - El costo es **muy barato**, no necesitas un servidor web. 
+
+### Desventajas 
+    - El **SEO** es **muy pobre** (no tiene HTML). 
+    - Rendimiento **muy bajo** en dispositivos de baja calidad. 
+    - Primera carga **muy lenta** debido a que tiene que cargar todo javascript. 
+
+
+## Renderizado en el servidor (SSR)
+
+*SSR: Server Side Rendering*
+
+Este término quizás es un poco confuso ya que es un poco "raro" que un **servidor** pueda **renderizar** una página web y podamos **visualizarla y usarla**. Realmente 
+este proceso es bastante rápido ya que la **carga de trabajo** que tenía antes nuestro navegador de montar todo el árbol de HTML, la realiza el **servidor**. 
+
+El proceso de renderizado es el siguiente: 
+
+1. El servidor recibe la petición y genera el HTML. 
+2. El servidor envía el HTML al navegador.
+3. El navegador muestra el HTML y carga javascript. 
+4. Una vez cargado javascript, el HTML se **"hidrata"**.  
+
+<details>
+    <summary>**¿Qué es la hidratación?**</summary>
+    <p>Se le denomina así al proceso de añadir "eventos" al código HTML previamente generado para que pueda realizar sus funciones, 
+        por ejemplo, cuando se haga click en un botón. </p>
+</details>
+
+Un ejemplo para entender la **hidratación** que se realiza en el cliente una vez cargado javascript sería: 
+
+1. El servidor nos devuelve el código HTML
+    ```html
+    <div id="root">
+        <h1>Hola mundo</h1>
+        <button>Click</button>
+    </div>
+    ```
+
+2. Carga javascript y los componentes se hidratan 
+    ```html
+    <div id="root">
+        <h1>Hola mundo</h1>
+        <button onclick="saludar()">Click</button>
+    </div>
+    ```
+Como se puede apreciar, se le añade un **evento** al botón que **ejecuta** una función se hace click. 
+
+### Beneficios 
+
+    - El **SEO** es **muy bueno** (HTML completo). 
+    - El **FCP (First Contentful Paint)** es **muy rápido** ya que no hay que generar el HTML. 
+    - El rendimiento es **bueno** independientemente del dispositivo que se use. 
+
+<details>
+    <summary>**¿Qué es el First Contentful Paint?**</summary>
+    <p>Es una métrica que indica cuanto tarda el navegador en renderizar por primera vez el contenido del DOM.</p>
+</details>
+
+### Desventajas 
+    - El costo es **alto** ya que necesitamos de un **servidor web potente**. 
+    - **Difícil** de desarrollar. 
+
+
+## Renderizado estático en el servidor (SSG)
+
+*SSG: Static Site Generation*
+
+Este tipo de renderizado es el **convencional**, el que se lleva usando desde los primeros sitios webs. 
+Consiste en **pre-renderizar** todos los archivos HTML en el momento que **"buildeamos"** nuestra aplicación, 
+con esto se consigue que cada vez que el servidor reciba una **petición** de un cliente, no tenga que hacer ningún trabajo de renderizado, 
+tan solo devolver el archivo HTML que **previamente** se generó.
+
+El uso de **SSG** es **extremadamente rápido** ya que no se necesita cargar nada de javascript y el HTML ya está **pre-renderizado**. El **problema** que surge 
+usando este tipo de renderizado es que no se pueden crear **páginas dinámicas** ya que el HTML solo se genera una vez. 

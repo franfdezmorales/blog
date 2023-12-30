@@ -1,11 +1,14 @@
 import { type FC } from 'react'
 import { read } from '@lib/guestbook'
 import { GuestbookEntry } from '@components/GuestbookEntry'
+import { notFound } from 'next/navigation'
 import styles from './styles.module.css'
 
 export const GuestbookEntries: FC = async (): Promise<JSX.Element> => {
 
-    const { data: entries } = await read()
+    const { data: entries, errorCode } = await read()
+
+    if (!entries || errorCode) notFound()
 
     return (
         <ul className={styles.entries}>

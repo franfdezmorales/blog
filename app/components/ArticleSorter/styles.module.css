@@ -1,0 +1,17 @@
+.sorters {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .5rem 0;
+}
+
+.sorters::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-scale-3);
+}

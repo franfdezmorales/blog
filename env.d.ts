@@ -7,6 +7,8 @@ declare global {
             POSTGRES_HOST: string
             POSTGRES_PASSWORD: string
             POSTGRES_DATABASE: string
+            KV_REST_API_URL: string
+            KV_REST_API_TOKEN: string
             AUTH_GITHUB_ID: string
             AUTH_GITHUB_SECRET: string
             AUTH_GOOGLE_ID: string
@@ -18,4 +20,4 @@ declare global {
     }
 }
 
-export {}
+export { }

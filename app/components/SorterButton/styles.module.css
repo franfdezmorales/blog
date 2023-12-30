@@ -1,0 +1,27 @@
+.sorter {
+    font-size: 1rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    text-align: left;
+    color: var(--color-scale-3);
+    cursor: pointer;
+    user-select: none;
+    transition: color .2s ease;
+}
+
+.sorter:nth-child(2) {
+    flex-grow: 1;
+}
+
+.active {
+    color: var(--color-scale-4);
+}
+
+.sorter:disabled {
+    cursor: default;
+    background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,72 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: var(--page-max-width);
+    padding-top: 5rem;
+    padding-bottom: 10rem;
+}
+
+.title {
+    width: 100%;
+    font-size: 3rem;
+    font-weight: 600;
+    text-align: center;
+    background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-wrap: balance;
+}
+
+.description {
+    font-size: 1.25rem;
+    color: var(--color-scale-4);
+    text-align: center;
+}
+
+.buttonWrapper {
+    width: fit-content;
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-geist-sans), 'Courier New', Courier, monospace;
+    text-decoration: none;
+    background-color: var(--color-scale-1);
+    border: none;
+    border-radius: .25rem;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: .75;
+    cursor: default;
+}
+
+.buttonText {
+    color: var(--color-scale-3);
+}
+
+.button:hover>.buttonText {
+    background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient {
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
+    border-radius: .25rem;
+}

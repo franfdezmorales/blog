@@ -6,18 +6,15 @@
 }
 
 .wrapper:nth-child(3n+1)>.author {
-    animation: changeTextColor-blue 0s ease 0s 1 normal forwards running;
-    animation-delay: .5s
+    color: var(--color-blue);
 }
 
 .wrapper:nth-child(3n+2)>.author {
-    animation: changeTextColor-green 0s ease 0s 1 normal forwards running;
-    animation-delay: .5s
+    color: var(--color-green);
 }
 
 .wrapper:nth-child(3n+3)>.author {
-    animation: changeTextColor-pink 0s ease 0s 1 normal forwards running;
-    animation-delay: .5s
+    color: var(--color-pink);
 }
 
 .author {
@@ -63,26 +60,5 @@
     100% {
         width: 100%;
         background: var(--color-scale-3);
-    }
-}
-
-@keyframes changeTextColor-blue {
-
-    100% {
-        color: var(--color-blue);
-    }
-}
-
-@keyframes changeTextColor-pink {
-
-    100% {
-        color: var(--color-pink);
-    }
-}
-
-@keyframes changeTextColor-green {
-
-    100% {
-        color: var(--color-green);
     }
 }

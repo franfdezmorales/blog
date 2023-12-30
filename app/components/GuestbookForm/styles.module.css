@@ -64,18 +64,6 @@
 .gradient {
     position: absolute;
     inset: -1px;
-    background: linear-gradient(to right, var(--color-scale-2) 0%, var(--color-scale-3) 100%);
+    background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
     border-radius: .25rem;
-    animation: move 0s ease forwards running;
-    animation-delay: .5s
-}
-
-@keyframes move {
-    from {
-        background: linear-gradient(to right, var(--color-scale-2) 0%, var(--color-scale-3) 100%);
-    }
-
-    to {
-        background: linear-gradient(to right, var(--color-blue) 0%, var(--color-green) 50%, var(--color-pink) 100%);
-    }
 }

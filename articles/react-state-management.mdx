@@ -1,0 +1,85 @@
+---
+title: "manejo de estados en React"
+created_at: "04/18/2022"
+---
+
+Mantener la **UI** de una aplicación **sincronizada** con el **estado** de esta, es algo **fundamental** pero realmente **complejo**. Cada vez que cualquier estado **cambie**, la UI debe de ser **actualizada**, 
+quizás si nuestra web no tiene mucho **dinamismo**, esta tarea se puede realizar sin ningún problema, en cambio, si nuestra aplicación comienza a **crecer** y cada vez es 
+**más dinámica**, la **actualización** de estos estados en la UI será **practicamente imposible** de realizar. 
+
+Por esta razón (y por otras menos importantes), existen los **frameworks** de JS como [React](https://es.reactjs.org/), [Vue](https://vuejs.org/), [Angular](https://angular.io/), etc. que nos permiten **manejar estados** de forma más **sencilla**.
+
+<details>
+    <summary>**¿Qué es el estado de una aplicación?**</summary>
+    <p>Es el término que recibe toda la **información** de la que disponemos en ese momento y se puede **acceder** (*variables*, *estructuras de datos*, etc)</p>
+</details>
+
+## Cómo manejar estados en React
+
+React **simplifica** mucho el tener un **control del estado** a través de los hooks `useState` y `useReducer`. Ambos permiten **actualizar** la UI en cuanto nuestra información 
+se **actualiza**, para explicar su funcionamiento, vamos a utilizar un ejemplo simple como puede ser un contador de likes/dislikes. 
+
+```jsx 
+const [likes, setLikes] = useState(0)  // Estado de likes
+const [dislikes, setDislikes] = useState(0) // Estado de dislikes
+
+return (
+    <>
+        <p>{`Likes: ${likes}`}</p>
+        <button onClick={() => setLikes(likes + 1)}>Like</button>
+        <p>{`Dislikes: ${dislikes}`}</p>
+        <button onClick={() => setDislikes(dislikes + 1)}>Dislike</button>
+    </>
+)
+```
+
+En el ejemplo anterior, hemos creado un contador con el que visualizaremos el número de likes y dislikes que tenemos **almacenados** en nuestros estados (`likes` y `dislikes`), también podremos incrementarlos.
+
+Como se puede ver, hemos usado `useState`, un hook que se introdujo en la [versión 16.8](https://es.reactjs.org/blog/2019/02/06/react-v16.8.0.html), este nos devuelve un array con **dos elementos**, 
+el *primero* es la **variable de estado** y el *segundo* es una **función que nos permite actualizar dicha variable**. 
+La variable de estado es **inmutable**, por lo que **no se puede modificar manualmente**, para editarla, 
+debemos de usar la **función** mencionada anteriormente. Este hook recibe un **parámetro** que es el **valor inicial** de nuestra variable de estado. El usar la función que nos devuelve el hook 
+conlleva un **re-renderizado** en la UI para **actualizar** la información que ha sido modificada.
+
+`useState` es la manera **más comoda** para manejar el estado de nuestra aplicación pero quizás no es la mejor opción cuando tenemos una gran **cantidad de estados**, imaginad
+que tenemos una aplicación que guarda muchos datos y para cada uno, necesitamos un estado diferente, podríamos crear un `useState` por cada dato pero no tendría mucho 
+sentido ya que en el futuro no sabríamos a cual se refiere debido a la gran cantidad de estos. Para este tipo de casos, existe `useReducer` 
+que nos permite manejar **estados más complejos**, como son lo que tienen una gran cantidad de datos, realmente este hook es una **abstracción** del `reduce` de JS.
+
+Para explicar el **funcionamiento** de `useReducer`, vamos a utilizar el ejemplo anterior pero usando este hook: 
+
+```jsx 
+const initialState = {
+    likes: 0,
+    dislikes: 0
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'LIKE':
+            return { ...state, likes: state.likes + 1 }
+        case 'DISLIKE':
+            return { ...state, dislikes: state.dislikes + 1 }
+        default:
+            return state
+    }
+}
+
+const [state, dispatch] = useReducer(reducer, initialState)
+
+return (
+    <>
+        <p>{`Likes: ${state.likes}`}</p>
+        <button onClick={() => dispatch({ type: 'LIKE' })}>Like</button>
+        <p>{`Dislikes: ${state.dislikes}`}</p>
+        <button onClick={() => dispatch({ type: 'DISLIKE' })}>Dislike</button>
+    </>
+)
+```
+
+Como se aprecia en el ejemplo, `useReducer` devuelve un array con **dos elementos**, el primero es el **estado** y el segundo es una **función** que nos permite **lanzar** acciones, 
+también admite **dos parámetros**, el primero es la **función reductora** que ejecutará los cambios en el estado y el segundo es el **estado inicial**. Esta función reductora recibe como parámetro 
+el estado actual *(implícito)* y un objeto con la **acción** que se va a lanzar.
+
+`useReducer` es algo más **complejo** de usar que `useState` pero es más **flexible** ya que nos permite manejar estados más **complejos** y con **diferentes condiciones**. 
+Como siempre, el **contexto** de nuestra aplicación será el que defina cuál debemos de usar, en la mayoría de los casos `useState` será el más usado. 

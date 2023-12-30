@@ -9,8 +9,8 @@ export default function Home() {
       <Rays />
       <section className={styles.intro}>
         <h1 className={styles.textIntro}>
-            <span className={styles.highlighted}>Francisco Fernández</span> es un desarrollador de software y creador de herramientas digitales.
-            Actualmente trabajando en <span className={styles.highlighted}>OHTIC</span>.
+          <span className={styles.highlighted}>Francisco Fernández</span>, desarrollador de software y creador de herramientas digitales.
+          Actualmente trabajando en <span className={styles.highlighted}>OHTIC</span>.
         </h1>
       </section>
       <CardsContainer />

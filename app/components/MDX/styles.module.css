@@ -1,0 +1,9 @@
+.link {
+    color: var(--color-scale-4);
+    text-decoration: underline;
+}
+
+.image {
+    border-radius: .25rem;
+    object-fit: contain;
+}

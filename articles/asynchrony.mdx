@@ -1,0 +1,283 @@
+---
+title: "asincronía en Javascript"
+created_at: "04/05/2022"
+---
+
+Si hablamos del **desarrollo web**, la palabra **asincronía** siempre estará presente. Sin esta propiedad, la mayoría de las webs **no funcionarían** correctamente,
+el tiempo de carga sería muy largo y normalmente, el usuario se cansaría de ver una **pantalla en blanco** y se marcharía.
+
+<details>
+    <summary>¿Qué es **asincronía**?</summary>
+    <p>Para explicar un poco el concepto, vamos a representarlo de manera sencilla con algo muy común:</p>
+    <p>Imaginad que estamos en un restaurante y pedimos algo para comer, el proceso sería algo parecido a:</p>
+    <ol>
+        <li>Nos atienden y pedimos lo que nos haya gustado. </li>
+        <li>El camarer@ da la orden en cocina. </li>
+        <li>Cocina prepara el plato. </li>
+        <li>Nos sirven el plato.</li>
+    </ol>
+    <p>Durante todo este tiempo, mientras esperabamos nuestro plato, hemos hecho diferentes cosas: hablar, beber, etc. Lo importante es que **no hemos estado quietos**, 
+    sin hacer nada durante la espera. A este concepto, en el mundo de la programación, se le conoce como **asincronía** y es una propiedad que nos permite **ejecutar** diferentes
+    partes del código **en paralelo**, sin que nos impida continuar con otras cosas.</p>
+</details>
+
+
+En Javascript actualmente, hay **tres** maneras para tratar con la asincronía: 
+    - **Callbacks**
+    - **Promesas**
+    - **Async / Await**
+
+## Callbacks
+
+Es la primera, la más antigua y más simple, pero **no es la más recomendada** (Ahora veremos el por qué).
+
+En el siguiente código vamos a representar el ejemplo que hemos puesto para explicar la asincronía usando **callbacks**.
+
+```javascript
+const getOrder = (callback) => {
+    console.log('Apuntando la orden...')
+    setTimeout(callback, 1)
+    /* El camarer@ apunta la orden
+    Duración: 1 minuto */
+}
+
+const returnOrder = (callback) => {
+    console.log('Dando la orden...')
+    setTimeout(callback, 1)
+    /* El camarer@ da la orden en cocina
+    Duración: 1 minuto */
+}
+
+const prepareOrder = (callback) => {
+    console.log('Preparando el plato...')
+    setTimeout(callback, 10)
+    /* Cocina prepara el plato
+    Duración: 10 minutos */
+}
+
+const serveOrder = () => {
+    console.log('Sirviendo el plato...')
+    /* Nos sirven el plato
+    Duración: 1 minuto */
+}
+
+const talk = () => {
+    console.log('Hablamos')
+    // Hablamos
+}
+
+const drink = () => {
+    console.log('Bebemos')
+    // Bebemos
+}
+
+
+getOrder(() => {
+    returnOrder(() => {
+        prepareOrder(() => {
+            serveOrder()
+        })
+        talk()
+    })
+    drink()
+})
+
+/* El orden salida sería: 
+    1. Apuntando la orden...
+    2. Dando la orden...
+    3. Bebemos
+    4. Preparando el plato...
+    5. Hablamos
+    6. Sirviendo el plato... */
+```
+Al ejecutar el código, nuestra **comanda** ha ido realizando todos los pasos hasta llegar al **final mientras** nosotros, durante el proceso, **bebíamos y hablábamos**.
+
+Como hemos comprobado, se puede tener asincronía mediante los **callbacks**, el problema que surge es el llamado *Pyramid of Doom*, nuestro **código** poco a poco va formando una **pirámide**, 
+haciendo que sea **ilegible** y **difícil de mantener**.
+
+## Promesas
+
+A partir de [ES6](https://262.ecma-international.org/6.0/), se introdujeron las [promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise), estas nos ayudan a tratar con la asincronía de una manera más sencilla
+y sin tener que usar callbacks, haciendo nuestro código más **legible** y **sencillo de entender**. 
+
+En el siguiente código vamos a usar el antiguo ejemplo pero esta vez usando **promesas**.
+
+``` javascript 
+const getOrder = () => {
+    console.log('Apuntando la orden...')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
+    /* El camarer@ apunta la orden
+    Duración: 1 minuto */
+}
+
+const returnOrder = () => {
+    console.log('Dando la orden...')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
+    /* El camarer@ da la orden en cocina
+    Duración: 1 minuto */
+}
+
+const prepareOrder = () => {
+    console.log('Preparando el plato...')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
+    /* Cocina prepara el plato
+    Duración: 10 minutos */
+}
+
+const serveOrder = () => {
+    console.log('Sirviendo el plato...')
+    /* Nos sirven el plato
+    Duración: 1 minuto */
+}
+
+const talk = () => {
+    console.log('Hablamos')
+    // Hablamos
+}
+
+const drink = () => {
+    console.log('Bebemos')
+    // Bebemos
+}
+
+
+getOrder()
+.then(() => {
+    returnOrder()
+    .then(() => {
+        prepareOrder()
+        .then(serveOrder)
+        drink()
+    })
+    talk()
+})
+
+/* El orden salida sería: 
+1. Apuntando la orden...
+2. Dando la orden...
+3. Hablamos
+4. Preparando el plato...
+5. Bebemos
+6. Sirviendo el plato... */
+```
+
+Como podemos ver, usando las **promesas**, el código sigue ejecutándose de **manera paralela**.
+
+<details>
+    <summary>**Resolver y rechazar promesas**</summary>
+    <p>Como se puede apreciar en el ejemplo de arriba, al crear una promesa, esta nos devuelve dos funciones ejecutoras `resolve` y `reject`.</p>
+    <h3>Resolve</h3>
+    <p>Al ejecutar esta función, estaremos indicando que los datos que estabamos esperando ya están **listos** y se puede **continuar** con el código.</p>
+    <h3>Reject</h3>
+    <p>Al ejecutar esta función, estaremos indicando que ha ocurrido un **error** o cualquier otro suceso y los datos que estabamos esperando **no van a llegar**. </p>
+</details>
+
+Las promesas además de ser una forma de trabajar con la asincronía, nos permiten **manejar errores**, esto es gracias al metodo `catch` y `finally`, 
+ambos **permiten** que podamos **seguir con la linea de ejecución** del programa aunque ocurra un error.
+
+``` javascript
+getPromise()
+.then(() => {
+    // Código a ejecutar si todo va bien
+})
+.catch(() => {
+    // Código a ejecutar si ocurre un error
+})
+.finally(() => {
+    // Código que se ejecutará siempre cuando finalice la promesa
+})
+```
+## Async / Await
+
+En [ES8](https://262.ecma-international.org/8.0/), se introdujo un nuevo método para trabajar con la asincronía y que fuera **más sencillo** para el desarrollador.
+Usando `async` y `await` podemos lograr lo mismo que en los ejemplos de arriba pero **sin tener que anidar nada**, el lenguaje ya lo hará por nosotros.
+
+``` javascript
+const getOrder = () => {
+    console.log('Apuntando la orden...')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
+    /* El camarer@ apunta la orden
+    Duración: 1 minuto */
+}
+
+const returnOrder = () => {
+    console.log('Dando la orden...')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
+    /* El camarer@ da la orden en cocina
+    Duración: 1 minuto */
+}
+
+const prepareOrder = () => {
+    console.log('Preparando el plato...')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
+    /* Cocina prepara el plato
+    Duración: 10 minutos */
+}
+
+const serveOrder = () => {
+    console.log('Sirviendo el plato...')
+    /* Nos sirven el plato
+    Duración: 1 minuto */
+}
+
+const talk = () => {
+    console.log('Hablamos')
+    // Hablamos
+}
+
+const drink = () => {
+    console.log('Bebemos')
+    // Bebemos
+}
+
+const proccess = async () => {
+    await getOrder()
+    await returnOrder()
+    await prepareOrder()
+    await serveOrder()
+}
+
+proccess()
+talk()
+drink()
+
+/* El orden salida sería: 
+    1. Apuntando la orden...
+    2. Hablamos
+    3. Bebemos
+    4. Dando la orden...
+    5. Preparando el plato...
+    6. Sirviendo el plato... */
+```
+
+Como se puede ver en el ejemplo, el código se sigue ejecutando de manera **asíncrona**, realizando los tres procesos al **mismo tiempo** y no esperando que acabe uno, para empezar con el otro.
+Usando este metodo nos aseguramos que nuestro código va a ser muy **fácil de mantener** ya que su lectura es **secuencial**. 
+
+> **Nota:** `async` y `await` dependen el uno del otro, no podremos usar `await` si no indicamos `async` en la función, también no servirá de nada usar `async` si en nuestra función no hay ninguna promesa.
+
+Aunque **no es obligatorio**, para **manejar errores**, es recomendable usar `try` y `catch` dentro de nuestra función asíncrona. 
+
+``` javascript
+const proccess = async () => {
+    try {
+        await getOrder()
+        await returnOrder()
+        await prepareOrder()
+        await serveOrder()
+    } catch (error) {
+        console.log(error)
+    }
+}
+```

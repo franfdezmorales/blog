@@ -1,14 +1,21 @@
 :root {
-  --color-scale-1: #000000;
-  --color-scale-2: #0F0F0F;
+  --color-scale-1: #111010;
+  --color-scale-2: #222020;
   --color-scale-3: #4C4C4C;
-  --color-scale-4: #E0E0E0;
+  --color-scale-4: #D4D4D4;
   --color-scale-5: #FAFAFA;
   --color-scale-6: #FFFFFF;
   --color-blue: #60A5FA;
   --color-pink: #E879F9;
   --color-green: #5EEAD4;
-  --page-max-width: 70rem;
+  --sh-class: #4c97f8;
+  --sh-identifier: var(--color-scale-6);
+  --sh-sign: #8996a3;
+  --sh-string: #0fa295;
+  --sh-keyword: #f47067;
+  --sh-comment: #a19595;
+  --sh-jsxliterals: #6266d1;
+  --page-max-width: 50rem;
 }
 
 * {
@@ -37,4 +44,15 @@ body {
   100% {
     background-position: 468px 0;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+    --page-max-width: 100%;
+  }
+
+  body {
+    padding: 1rem;
+  }
+
 }

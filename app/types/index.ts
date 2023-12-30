@@ -7,5 +7,6 @@ export interface ResponseDefault<T> {
 export const enum ERROR_CODE {
     NOT_AUTHENTICATED = 401,
     BAD_REQUEST = 400,
-    UNKNOWN_ERROR = 500
+    UNKNOWN_ERROR = 500,
+    NOT_FOUND = 404
 }

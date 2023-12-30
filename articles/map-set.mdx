@@ -1,0 +1,161 @@
+---
+title: "map y set"
+created_at: "04/09/2022"
+---
+
+Como se ha comentado en posts anteriores, las **estructuras de datos** y la manera de almacenarlas en la memoria es algo **fundamental** en el **desarrollo de software**.
+Realmente, mucha gente **no tiene en cuenta** a la hora de desarrollar la **importancia** de estas, por lo que luego suelen surgir **diferentes problemas** cuando la aplicación crece o cuando ocurre algo inesperado.
+
+> *Bad programmers worry about the code. Good programmers worry about data structures and their relationships.*
+> - **[Linus Torvalds](https://twitter.com/linus__torvalds)** / 29 de Julio, 2006 / [Discusión entre varios desarrolladores](https://lwn.net/Articles/193245/)
+
+Con la llegada de [ES6](https://262.ecma-international.org/6.0/), se introdujeron dos nuevos "objetos" para **almacenar datos** y que fuera **más sencillo acceder** a estos, resolviendo problemas como el **duplicado**, **orden**, **rendimiento**, etc.
+Estos son `Map` y `Set`.
+
+## Map
+
+Este objeto permite almacenar datos usando **parejas** de **clave-valor**, como vemos tiene cierta similitud con `Object`, 
+pero tiene ciertas características que hacen que sea una opción muy recomendable frente a este: 
+    - **Orden**: El orden en el que se introducen los datos **se preserva**, en los objetos **puede cambiar**. 
+
+```javascript 
+const city = new Map()
+
+city.set('name', 'Granada') // 1
+city.set('country', 'Spain') // 2
+city.set('population', 232208) // 3
+
+/*  
+Map(3) {
+    'name' => 'Granada',
+    'country' => 'Spain',
+    'population' => 232208,
+}
+
+El orden no cambia
+*/
+
+
+const city = new Object()
+
+city.name = 'Granada' // ???
+city.country = 'Spain' // ???
+city.population = 232208 // ???
+
+/* 
+{
+    country: 'Spain',
+    name: 'Granada',
+    population: 232208
+}
+
+El orden puede variar
+*/
+```
+    - **Accesibilidad**: Tiene **métodos específicos** para acceder a los datos, como `get`, `has`, etc.
+
+```javascript 
+const city = new Map()
+
+city.set('name', 'Granada')
+city.set('country', 'Spain') 
+city.set('population', 232208) 
+
+city.get('name') // 'Granada'
+city.has('population') // true
+city.name // ❌
+```
+    
+    - **Rendimiento**: Es muchísimo **más rapido acceder y modificar** los datos comparado con `Object`.
+
+```javascript 
+const cityMap = new Map()
+const cityObject = new Object()
+const cities = [...] // 385 cities (https://gist.github.com/norcal82/42440bd06a67eb7d9616)
+
+for (let i = 0; i < cities.length; i++) {
+        cityObject[i] = cities[i]
+        cityMap.set(i, cities[i])
+}
+
+console.time('Object')
+cityObject.hasOwnProperty(350)
+console.timeEnd('Object')
+// Object: 0.076ms
+
+console.time('Map')
+cityMap.has(350)
+console.timeEnd('Map')
+// Map: 0.012ms
+
+console.time('Object')
+cityObject[386] = 'Madrid'
+console.timeEnd('Object')
+// Object: 0.009ms
+
+console.time('Map')
+cityMap.set(386, 'Madrid')
+console.timeEnd('Map')
+// Map: 0.005ms
+```
+
+<details>
+    <summary>**¿Cómo recorrer un Map?**</summary>
+    <p>Para poder recorrer un objeto `Map`, podemos usar `for..of`, este nos devolverá la **clave y el valor**.</p>
+
+    ```javascript
+    for (let [key, value] of cityMap) {
+        console.log(key, value)
+    }
+    ```
+</details>
+
+## Set
+
+Este objeto permite almacenar **datos únicos**, es decir, que no se pueden repetir. En sus inicios, se dijo que sería el nuevo `Array` pero lamentablemente, 
+no tiene muchos de los métodos nativos.
+Como pasa con `Array`, `Set` también **conserva el orden** de inserción.
+
+El **rendimiento** comparado con `Array` es increíblemente **más rápido**: 
+
+```javascript
+const citySet = new Set()
+const cityArray = []
+const cities = [...] // Array 385 cities (https://gist.github.com/norcal82/42440bd06a67eb7d9616)
+
+for (let i = 0; i < cities.length; i++) {
+    cityArray.push(cities[i])
+    citySet.add(cities[i])
+}
+
+console.time('Array')
+cityArray.includes('Madrid')
+console.timeEnd('Array')
+// Array: 0.076ms
+
+console.time('Set')
+citySet.has('Madrid')
+console.timeEnd('Set')
+// Set: 0.01ms
+
+console.time('Array')
+cityArray[386] = 'Madrid'
+console.timeEnd('Array')
+// Array: 0.012ms
+
+console.time('Set')
+citySet.add('Madrid')
+console.timeEnd('Set')
+// Set: 0.005ms
+```
+
+<details>
+    <summary>**¿Cómo recorrer un Set?**</summary>
+    <p>Para poder recorrer un objeto `Set`, podemos usar `for..of`, este nos devolverá el **valor**.</p>
+
+    ```javascript
+    for (let city of citySet) {
+        console.log(city)
+    }
+    ```
+</details>

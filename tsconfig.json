@@ -34,7 +34,7 @@
         "app/lib/*"
       ],
       "@utils": [
-        "app/lib/index"
+        "app/utils/index"
       ],
       "@types": [
         "app/types/index"

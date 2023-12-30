@@ -1,0 +1,120 @@
+---
+title: "declaración de variables en Javascript"
+created_at: "04/03/2022"
+---
+
+Cuando hablamos de **variables**, podemos decir que son una parte fundamental de la programación.
+Estas nos permiten asignarle un **nombre** a un **valor** para que posteriormente podamos usarlas las veces que necesitemos.
+
+En Javascript, actualmente hay tres formas de declarar variables: `var`, `let` y `const`.
+
+```javascript 
+/* Forma obsoleta y antigua, antes de ES6 */
+    var city = 'Granada';
+/* Forma moderna y reciente, después de ES6 */
+    let city = 'Granada';
+    const city = 'Granada';
+```
+## var 
+Como hemos visto en el ejemplo anterior, esta manera actualmente no se usa y está **obsoleta**. 
+Esto se debe a que a partir de [ES6](https://262.ecma-international.org/6.0/), se introduce una nueva forma de declarar variables que cuentan con **scope de bloque**.
+Hasta ese momento, declarar variables usando `var` significaba que la variable podía ser accedida desde cualquier parte del código y tenía un **scope global**.
+
+```javascript
+/* Scope global */
+
+function getCityName() {
+    var city = 'Granada'
+    console.log(`El nombre de la ciudad es ${city}`)
+}
+
+getCityName() // El nombre de la ciudad es Granada
+console.log(city) // Granada
+
+/* Scope de bloque */
+
+function getCityName() {
+    const city = 'Granada'
+    console.log(`El nombre de la ciudad es ${city}`)
+}
+
+getCityName() // El nombre de la ciudad es Granada
+console.log(city) // undefined
+```
+Como hemos visto en el primer ejemplo, si accedemos al valor de la variable **fuera de la función**, 
+es decir, **fuera del scope de bloque**, podemos **usarla** igualmente, a esto se le denomina **scope global**.
+En el segundo ejemplo no pasa lo mismo, solo podemos acceder a la variable **dentro de la función**, 
+en caso de que lo hagamos fuera de esta, nos daría un error indicando que la variable **no está definida**, 
+a esto se le denomina **scope de bloque**. \
+El hacer uso de `var` también conlleva hacer uso de [hoisting](https://developer.mozilla.org/es/docs/Glossary/Hoisting), introducido en **ES6**.
+
+<details>
+    <summary>¿Qué es **hoisting**?</summary>
+    <p>Cuando declaramos una función o una variable mediante `var`, esta se puede utilizar en cualquier parte de nuestro código, su scope es **global**, esto es debido a que en el momento de compilación del programa, automáticamente son **asignadas en memoria.**</p>
+    <p>Existe una **falsa creencia** de que lo que ocurre es que son **físicamente movidas al comienzo**, esto es totalmente **erróneo**.</p>
+</details>
+
+## let y const
+La manera a partir de **ES6** de declarar variables es mediante `let` y `const`. 
+Usando estos términos nos aseguraremos de que nuestras variables tienen un **scope de bloque** y nos ayudará a tener **menos errores** al escribir nuestro código.
+
+### let
+Nos permite crear variables que se pueden **modificar**, es decir, que podemos **cambiar su valor**.
+
+```javascript
+let city = 'Granada'
+console.log(city) // Granada
+
+city = 'Madrid'
+console.log(city) // Madrid
+```
+### const
+Nos permite crear variables que **no se pueden modificar** (aquí haremos una pequeña excepción), es decir, que no podemos **cambiar su valor**.
+
+```javascript
+const city = 'Granada'
+console.log(city) // Granada
+
+city = 'Madrid' // ❌
+```
+En el código anterior se puede ver que no podemos cambiar el valor de la variable `city`, el usar `const` implica que el **valor no se puede cambiar** pero como hemos comentado antes, hay una **excepción**,
+si intentamos cambiar el valor de un **array** o de un **objeto**, el cambio se realizaría.
+
+```javascript	
+//Array
+const cities = ['Granada', 'Madrid', 'Nueva York', 'Los Ángeles']
+
+cities[3] = 'Londres' // ✅
+console.log(cities) // [ 'Granada', 'Madrid', 'Nueva York', 'Londres' ]
+
+cities = [...cities, 'Paris'] // ❌
+
+cities.push('Paris') // ✅
+console.log(cities) // [ 'Granada', 'Madrid', 'Nueva York', 'Paris', 'Paris' ]
+
+//Objeto
+const city = {
+    name: 'Granada',
+    country: 'España', 
+    population: 1.5
+}
+
+city.population = 2.5 // ✅
+console.log(city) // { name: 'Granada', country: 'España', population: 2.5 }
+
+city = {...city, population: 2.5} // ❌
+
+city.monuments = ['Alhambra', 'Catedral', 'Palacio de Carlos V'] // ✅
+console.log(city) // { name: 'Granada', country: 'España', population: 2.5, monuments: [ 'Alhambra', 'Catedral', 'Palacio de Carlos V' ] }
+```
+
+> Esto es posible debido a que se guarda una referencia del `array` o del `objeto`, lo que permite que podamos cambiar sus valores pero no reasignarlo. Si quieres investigar más sobre el tema, te dejo este [link](https://stackoverflow.com/questions/23436437/why-can-i-change-a-constant-object-in-javascript) en el que explica que ocurre en el motor de JS para que esto sea posible.
+
+## ¿Qué es mejor usar let o const?
+
+Seguramente esta sea una de las preguntas más frecuentes en Javascript y de la cual todo el mundo tiene una respuesta diferente. \
+Realmente, usar una por encima de la otra **no** te otorga un beneficio en cuanto a la **eficiencia** de tu código, pero si te permite que tu código sea más **legible** y más **fácil de mantener**.
+> Se programa para las personas, no para las máquinas.
+
+Mi humilde opinión es que uses la que te haga sentir mas **cómod@** y te haga introducir menos errores en tu proyecto. \
+Te dejo una [entrevista](https://youtu.be/XEt09iK8IXs?t=58) que le realizaron a [Dan Abramov](https://twitter.com/dan_abramov) en el que da su opinión sobre esta pregunta.
