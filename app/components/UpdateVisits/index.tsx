@@ -1,16 +1,17 @@
-import { cache, type FC } from 'react'
+import { type FC } from 'react'
 import { updateVisitsFromSlug } from '@lib/articles'
+import { unstable_noStore as noStore } from 'next/cache'
 import styles from './styles.module.css'
 
 interface Props {
     slug: string
 }
 
-const incrementVisits = cache(updateVisitsFromSlug)
-
 export const UpdateVisits: FC<Props> = async ({ slug }): Promise<JSX.Element> => {
 
-    const { data: visits } = await incrementVisits(slug)
+    noStore()
+
+    const { data: visits } = await updateVisitsFromSlug(slug)
 
     return (
         <span className={styles.visit}>

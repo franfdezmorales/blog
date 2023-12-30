@@ -3,7 +3,6 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import fs from 'fs/promises'
 import path from 'path'
 import { kv } from '@vercel/kv'
-import { unstable_noStore as noStore } from 'next/cache'
 import { type JSXElementConstructor, type ReactElement } from 'react'
 import { components } from '@components/MDX'
 
@@ -115,7 +114,6 @@ export const sortArticles = (articles: SimpleArticle[] | null, sortParams: { [ke
 
 export const getVisitsFromSlug = async (slug: string): Promise<ResponseDefault<number>> => {
 
-    noStore()
     try {
         const visits = (await kv.hget('visits', slug)) ?? 0
         const typedVisits = Number(visits)
@@ -136,10 +134,8 @@ export const getVisitsFromSlug = async (slug: string): Promise<ResponseDefault<n
 
 export const updateVisitsFromSlug = async (slug: string): Promise<ResponseDefault<number>> => {
 
-    noStore()
     try {
         const visits = await kv.hincrby("visits", slug, 1)
-
         return {
             errorCode: null,
             errorMessage: null,
