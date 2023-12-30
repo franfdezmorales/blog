@@ -3,7 +3,7 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import fs from 'fs/promises'
 import path from 'path'
 import { kv } from '@vercel/kv'
-import { unstable_cache as cache, unstable_noStore as noStore } from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { type JSXElementConstructor, type ReactElement } from 'react'
 import { components } from '@components/MDX'
 
@@ -25,7 +25,7 @@ interface ArticleMetadata {
     created_at: string
 }
 
-export const getAllArticles = cache(async (): Promise<ResponseDefault<SimpleArticle[]>> => {
+export const getAllArticles = async (): Promise<ResponseDefault<SimpleArticle[]>> => {
 
     try {
         const directory = path.join(process.cwd(), 'articles')
@@ -63,7 +63,7 @@ export const getAllArticles = cache(async (): Promise<ResponseDefault<SimpleArti
             data: null
         }
     }
-}, ['articles'])
+}
 
 export const getArticleBySlug = async (slug: string): Promise<ResponseDefault<Article>> => {
     const directory = path.join(process.cwd(), 'articles')
