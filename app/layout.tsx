@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { AppLayout } from '@components/AppLayout'
 import { GeistSans } from 'geist/font/sans'
+import { Analytics } from '@vercel/analytics/react';
 import '@styles/globals.css'
 
 
@@ -48,6 +49,7 @@ export default function RootLayout({
         <AppLayout>
           {children}
         </AppLayout>
+        <Analytics />
       </body>
     </html>
   )
