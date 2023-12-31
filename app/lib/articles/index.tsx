@@ -5,6 +5,7 @@ import path from 'path'
 import { kv } from '@vercel/kv'
 import { type JSXElementConstructor, type ReactElement } from 'react'
 import { components } from '@components/MDX'
+import { unstable_cache as cache } from 'next/cache'
 
 interface Article {
     slug: string,
@@ -24,7 +25,7 @@ interface ArticleMetadata {
     created_at: string
 }
 
-export const getAllArticles = async (): Promise<ResponseDefault<SimpleArticle[]>> => {
+export const getAllArticles = cache(async (): Promise<ResponseDefault<SimpleArticle[]>> => {
 
     try {
         const directory = path.join(process.cwd(), 'articles')
@@ -62,38 +63,47 @@ export const getAllArticles = async (): Promise<ResponseDefault<SimpleArticle[]>
             data: null
         }
     }
-}
+}, ['articles'])
 
 export const getArticleBySlug = async (slug: string): Promise<ResponseDefault<Article>> => {
-    const directory = path.join(process.cwd(), 'articles')
-    const articlesURL = await fs.readdir(directory)
-    const articleURL = articlesURL.find(url => {
-        const [fileName] = url.split('.')
-        return fileName === slug
-    })
 
-    if (!articleURL) return {
-        errorCode: ERROR_CODE.NOT_FOUND,
-        errorMessage: 'Article not found',
-        data: null
-    }
+    try {
+        const directory = path.join(process.cwd(), 'articles')
+        const articlesURL = await fs.readdir(directory)
+        const articleURL = articlesURL.find(url => {
+            const [fileName] = url.split('.')
+            return fileName === slug
+        })
 
-    const file = await fs.readFile(`${directory}/${articleURL}`)
-    const { content, frontmatter } = await compileMDX<ArticleMetadata>({
-        source: file,
-        options: {
-            parseFrontmatter: true
-        },
-        components
-    })
+        if (!articleURL) return {
+            errorCode: ERROR_CODE.NOT_FOUND,
+            errorMessage: 'Article not found',
+            data: null
+        }
 
-    const { title, created_at } = frontmatter
-    const article = { title, created_at, content, slug }
+        const file = await fs.readFile(`${directory}/${articleURL}`)
+        const { content, frontmatter } = await compileMDX<ArticleMetadata>({
+            source: file,
+            options: {
+                parseFrontmatter: true
+            },
+            components
+        })
 
-    return {
-        errorCode: null,
-        errorMessage: null,
-        data: article
+        const { title, created_at } = frontmatter
+        const article = { title, created_at, content, slug }
+
+        return {
+            errorCode: null,
+            errorMessage: null,
+            data: article
+        }
+    } catch (err) {
+        return {
+            errorCode: ERROR_CODE.UNKNOWN_ERROR,
+            errorMessage: err as string,
+            data: null
+        }
     }
 }
 
