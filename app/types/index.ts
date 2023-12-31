@@ -10,3 +10,12 @@ export const enum ERROR_CODE {
     UNKNOWN_ERROR = 500,
     NOT_FOUND = 404
 }
+
+export interface CloudfareImage {
+    filename: string,
+    id: string,
+    meta: { [key: string]: string },
+    requireSignedURLs: boolean,
+    uploaded: string,
+    variants: string[]
+}

@@ -22,9 +22,11 @@ export default async function Photos() {
                     <li className={styles.photo} key={photo.src}>
                         <Image
                             alt='Photo'
-                            src={`/photos/${photo.src}`}
+                            src={photo.src}
                             fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             placeholder='blur'
+                            quality={75}
                             blurDataURL={photo.blurSrc}
                         />
                     </li>

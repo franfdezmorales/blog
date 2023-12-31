@@ -1,26 +1,44 @@
-import { ERROR_CODE, type ResponseDefault } from '@types'
-import fs from 'fs/promises'
-import path from 'path'
+import { type CloudfareImage, ERROR_CODE, type ResponseDefault } from '@types'
 import { unstable_cache as cache } from 'next/cache'
 import { getPlaiceholder } from 'plaiceholder'
 
 interface Photo {
     src: string,
-    blurSrc: string
+    blurSrc: string,
+    height: number,
+    width: number
 }
 
 const read = cache(async (): Promise<ResponseDefault<Photo[]>> => {
 
     try {
-        const directory = path.join(process.cwd(), 'public', 'photos')
-        const photosURL = await fs.readdir(directory)
-        const photosPromise = photosURL.map(async (photoURL) => {
-            const file = await fs.readFile(`${directory}/${photoURL}`)
-            const { base64 } = await getPlaiceholder(file)
+        const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFARE_IMAGES_ACCOUNT_ID}/images/v2?sort_order=asc`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${process.env.CLOUDFARE_IMAGES_BEARER_TOKEN}`
+            }
+        })
+
+        const { result: { images }, success } = await response.json()
+
+        if (!success) return {
+            errorCode: ERROR_CODE.UNKNOWN_ERROR,
+            errorMessage: 'Fail to fetch cloudfare',
+            data: null
+        }
+
+        const photosPromise = images.map(async (image: CloudfareImage) => {
+            const { variants, id } = image
+            const [src] = variants
+            const responseBuffer = await fetch(src).then(res => res.arrayBuffer())
+            const imageBuffer = Buffer.from(responseBuffer)
+            const { base64, metadata: { height, width } } = await getPlaiceholder(imageBuffer)
 
             return {
-                src: photoURL,
-                blurSrc: base64
+                src: id,
+                blurSrc: base64,
+                height,
+                width
             }
         })
 
