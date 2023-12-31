@@ -1,6 +1,7 @@
 import { ERROR_CODE, type ResponseDefault } from '@types'
 import fs from 'fs/promises'
 import path from 'path'
+import { unstable_cache as cache } from 'next/cache'
 import { getPlaiceholder } from 'plaiceholder'
 
 interface Photo {
@@ -8,7 +9,7 @@ interface Photo {
     blurSrc: string
 }
 
-const read = async (): Promise<ResponseDefault<Photo[]>> => {
+const read = cache(async (): Promise<ResponseDefault<Photo[]>> => {
 
     try {
         const directory = path.join(process.cwd(), 'public', 'photos')
@@ -37,6 +38,6 @@ const read = async (): Promise<ResponseDefault<Photo[]>> => {
             data: null
         }
     }
-}
+}, ['photos'])
 
 export default read
