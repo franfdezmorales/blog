@@ -107,7 +107,7 @@ export const getArticleBySlug = async (slug: string): Promise<ResponseDefault<Ar
     }
 }
 
-export const sortArticles = (articles: SimpleArticle[] | null, sortParams: { [key: string]: string | string[] | undefined }) => {
+export const sortArticles = (articles: SimpleArticle[], sortParams: { [key: string]: string | string[] | undefined }): SimpleArticle[] => {
     if (!articles) return []
     if (Object.keys(sortParams).length === 0) return articles
 
@@ -120,6 +120,8 @@ export const sortArticles = (articles: SimpleArticle[] | null, sortParams: { [ke
         if (sortParams.mode === 'asc') return articles.toSorted((a, b) => a.title > b.title ? -1 : 1)
         return articles.toSorted((a, b) => a.title < b.title ? -1 : 1)
     }
+
+    return []
 }
 
 export const getVisitsFromSlug = async (slug: string): Promise<ResponseDefault<number>> => {

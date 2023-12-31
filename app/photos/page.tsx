@@ -18,7 +18,7 @@ export default async function Photos() {
     return (
         <div className={styles.main}>
             <ul className={styles.grid}>
-                {photos?.map((photo) => (
+                {photos.map((photo) => (
                     <li className={styles.photo} key={photo.src}>
                         <Image
                             alt='Photo'

@@ -23,7 +23,7 @@ export const ArticleList: FC<Props> = async ({ sortParams }): Promise<JSX.Elemen
                 <ArticleSorter />
             </Suspense>
             <ul className={styles.list}>
-                {sortedArticles?.map(article => (
+                {sortedArticles.map(article => (
                     <Article
                         key={article.slug}
                         slug={article.slug}

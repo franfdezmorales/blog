@@ -12,7 +12,7 @@ export const GuestbookEntries: FC = async (): Promise<JSX.Element> => {
 
     return (
         <ul className={styles.entries}>
-            {entries?.map((entry) => (
+            {entries.map((entry) => (
                 <GuestbookEntry key={entry.id} id={entry.id} name={entry.author_name} content={entry.content} created_at={entry.created_at} />
             ))}
         </ul>
