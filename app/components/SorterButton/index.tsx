@@ -22,7 +22,8 @@ export const SorterButton: FC<Props> = ({ name, label, sort, mode, pathname, cre
             router.push(`${pathname}?${createQueryString(['sort', 'mode'], [sort, orderMode])}`, { scroll: false })
         } else {
             const orderSort = sort === 'date' ? 'title' : 'date'
-            router.push(`${pathname}?${createQueryString(['sort', 'mode'], [orderSort, 'asc'])}`, { scroll: false })
+            const orderMode = sort === 'title' ? 'asc' : 'desc'
+            router.push(`${pathname}?${createQueryString(['sort', 'mode'], [orderSort, orderMode])}`, { scroll: false })
         }
     }
 
