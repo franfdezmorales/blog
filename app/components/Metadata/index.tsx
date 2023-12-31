@@ -1,7 +1,7 @@
 import { Suspense, type FC } from 'react'
 import { relativeFormat } from '@utils'
-import Link from 'next/link'
 import { UpdateVisits } from '@components/UpdateVisits'
+import { UpdateVisitsSkeleton } from '@components/UpdateVisits/skeleton'
 import styles from './styles.module.css'
 
 interface Props {
@@ -21,7 +21,7 @@ export const Metadata: FC<Props> = ({ slug, created_at }): JSX.Element => {
     return (
         <div className={styles.wrapper}>
             <span className={styles.date}>{`${formattedDate} (${relativeDate})`}</span>
-            <Suspense fallback={null}>
+            <Suspense fallback={<UpdateVisitsSkeleton />}>
                 <UpdateVisits slug={slug} />
             </Suspense>
         </div>

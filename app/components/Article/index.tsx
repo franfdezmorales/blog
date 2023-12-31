@@ -1,6 +1,7 @@
 import { Suspense, type FC } from 'react'
 import Link from 'next/link'
 import { Visits } from '@components/Visits'
+import { VisitsSkeleton } from '@components/Visits/skeleton'
 import styles from './styles.module.css'
 
 interface Props {
@@ -18,7 +19,7 @@ export const Article: FC<Props> = ({ slug, title, created_at }): JSX.Element => 
             <Link href={`/articles/${slug}`} className={styles.link}>
                 <span className={styles.date}>{year}</span>
                 <span className={styles.title}>{title}</span>
-                <Suspense fallback={null}>
+                <Suspense fallback={<VisitsSkeleton />}>
                     <Visits slug={slug} />
                 </Suspense>
             </Link>
