@@ -1,8 +1,14 @@
 import { Suspense } from 'react'
 import { GuestbookEntries } from '@components/GuestbookEntries'
+import { type Metadata } from 'next'
 import { GuestbookForm } from '@components/GuestbookForm'
 import { GuestbookEntriesSkeleton } from '@components/GuestbookEntries/skeleton'
 import styles from '@styles/guestbook.module.css'
+
+export const metadata: Metadata = {
+    title: 'Guestbook',
+    description: 'Deja tu marca para que los demás la vean'
+}
 
 export default function Guestbook() {
 

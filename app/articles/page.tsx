@@ -1,5 +1,11 @@
 import { ArticleList } from '@components/ArticleList'
+import { type Metadata } from 'next'
 import styles from '@styles/articles.module.css'
+
+export const metadata: Metadata = {
+    title: 'Artículos',
+    description: 'Encuentra explicaciones y experiencias sobre el mundo web'
+}
 
 export default async function Articles({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 

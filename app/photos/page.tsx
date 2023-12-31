@@ -1,7 +1,13 @@
 import { read } from "@lib/photos"
 import Image from "next/image"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 import styles from '@styles/photos.module.css'
+
+export const metadata: Metadata = {
+    title: 'Fotos',
+    description: 'Echa un vistazo a mis fotos preferidas'
+}
 
 export default async function Photos() {
 
