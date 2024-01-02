@@ -16,6 +16,7 @@ declare global {
             AUTH_DISCORD_ID: string
             AUTH_DISCORD_SECRET: string
             AUTH_SECRET: string
+            AUTH_ADMIN_EMAIL: string
             CLOUDFARE_IMAGES_BEARER_TOKEN: string
             CLOUDFARE_IMAGES_ACCOUNT_ID: string
             NEXT_PUBLIC_CLOUDFARE_ACCOUNT_HASH: string

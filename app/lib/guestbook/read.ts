@@ -1,4 +1,5 @@
 import { ERROR_CODE, type ResponseDefault } from "@types";
+import { unstable_cache as cache } from "next/cache";
 import { sql } from "@vercel/postgres";
 
 interface GuestbookEntry {
@@ -9,7 +10,7 @@ interface GuestbookEntry {
     created_at: number
 }
 
-const read = async (): Promise<ResponseDefault<GuestbookEntry[]>> => {
+const read = cache(async (): Promise<ResponseDefault<GuestbookEntry[]>> => {
 
     try {
         const { rows } = await sql`
@@ -42,6 +43,6 @@ const read = async (): Promise<ResponseDefault<GuestbookEntry[]>> => {
             data: null
         }
     }
-}
+}, ['guestbook-entries'], { tags: ['guestbook-entries'] })
 
 export default read

@@ -1,4 +1,5 @@
 import { type CloudfareImage, ERROR_CODE, type ResponseDefault } from '@types'
+import { unstable_cache as cache } from 'next/cache'
 import { getPlaiceholder } from 'plaiceholder'
 
 interface Photo {
@@ -8,7 +9,7 @@ interface Photo {
     width: number
 }
 
-const read = async (): Promise<ResponseDefault<Photo[]>> => {
+const read = cache(async (): Promise<ResponseDefault<Photo[]>> => {
 
     try {
         const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFARE_IMAGES_ACCOUNT_ID}/images/v2?sort_order=asc`, {
@@ -55,6 +56,6 @@ const read = async (): Promise<ResponseDefault<Photo[]>> => {
             data: null
         }
     }
-}
+}, ['photos'], { tags: ['photos'] })
 
 export default read

@@ -4,4 +4,4 @@ import GitHub from '@auth/core/providers/github'
 import Google from '@auth/core/providers/google'
 import Discord from '@auth/core/providers/discord'
 
-export const { handlers: { GET, POST }, auth } = NextAuth({ providers: [GitHub as Provider, Google as Provider, Discord as Provider] })
+export const { handlers: { GET, POST }, auth, signIn } = NextAuth({ providers: [GitHub as Provider, Google as Provider, Discord as Provider] })
