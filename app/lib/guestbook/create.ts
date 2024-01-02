@@ -3,7 +3,7 @@ import { auth } from "@lib/auth"
 import { ERROR_CODE, type ResponseDefault } from "@types"
 import { nanoid } from 'nanoid'
 import { sql } from "@vercel/postgres"
-import { revalidatePath } from "next/cache"
+import { revalidateTag } from "next/cache"
 
 const create = async (formData: FormData): Promise<ResponseDefault<undefined>> => {
 
@@ -38,7 +38,7 @@ const create = async (formData: FormData): Promise<ResponseDefault<undefined>> =
             data: null
         }
 
-        revalidatePath('/guestbook')
+        revalidateTag('guestbook-entries')
 
         return {
             errorCode: null,

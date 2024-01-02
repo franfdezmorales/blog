@@ -1,0 +1,31 @@
+.content {
+    min-height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: var(--color-scale-2);
+    outline: 1px dashed var(--color-scale-3);
+    color: var(--color-scale-3);
+    padding: 1rem;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: outline-color .2s ease;
+}
+
+.icon {
+    font-size: 4rem;
+    transition: color .2s ease;
+}
+
+.text {
+    font-size: 1.25rem;
+    text-align: center;
+    transition: color .2s ease;
+}
+
+.active {
+    color: var(--color-scale-4);
+    outline-color: var(--color-scale-4);
+}
