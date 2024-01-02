@@ -3,7 +3,7 @@ import { useState, type FC } from 'react'
 import { FileUploader } from '@components/FileUploader'
 import { FileUpload } from '@components/FileUpload'
 import { uploadPhotos } from '@lib/admin'
-import { useFormStatus } from 'react-dom'
+import { UploadButton } from './buttonForm'
 import styles from './styles.module.css'
 
 
@@ -42,9 +42,7 @@ export const AdminPhotoUploader: FC = (): JSX.Element => {
                 </div>}
             {files.length > 0
                 ? <form className={styles.form} action={handleUploadFiles}>
-                    <button type='submit' className={styles.uploadButton}>
-                        Subir archivos
-                    </button>
+                    <UploadButton />
                 </form>
                 : null}
         </section>
