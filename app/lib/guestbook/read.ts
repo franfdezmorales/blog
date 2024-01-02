@@ -43,6 +43,6 @@ const read = cache(async (): Promise<ResponseDefault<GuestbookEntry[]>> => {
             data: null
         }
     }
-}, ['guestbook-entries'], { tags: ['guestbook-entries'] })
+}, ['guestbook-entries'], { revalidate: false, tags: ['guestbook-entries'] })
 
 export default read

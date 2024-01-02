@@ -56,6 +56,6 @@ const read = cache(async (): Promise<ResponseDefault<Photo[]>> => {
             data: null
         }
     }
-}, ['photos'], { tags: ['photos'] })
+}, ['photos'], { revalidate: false, tags: ['photos'] })
 
 export default read
