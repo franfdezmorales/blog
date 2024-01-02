@@ -1,9 +1,8 @@
-import { read } from "@lib/photos"
-import Image from "next/image"
 import { type Metadata } from "next"
-import { notFound } from "next/navigation"
+import { PhotosGrid } from "@components/PhotosGrid"
+import { Suspense } from "react"
+import { PhotosSkeleton } from '@components/PhotosGrid/skeleton'
 import styles from '@styles/photos.module.css'
-import { unstable_noStore as noStore } from "next/cache"
 
 export const metadata: Metadata = {
     title: 'Fotos',
@@ -12,29 +11,11 @@ export const metadata: Metadata = {
 
 export default async function Photos() {
 
-    noStore()
-
-    const { data: photos, errorCode } = await read()
-
-    if (!photos || errorCode) notFound()
-
     return (
         <div className={styles.main}>
-            <ul className={styles.grid}>
-                {photos.map((photo) => (
-                    <li className={styles.photo} key={photo.src}>
-                        <Image
-                            alt='Photo'
-                            src={photo.src}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            placeholder='blur'
-                            quality={75}
-                            blurDataURL={photo.blurSrc}
-                        />
-                    </li>
-                ))}
-            </ul>
+            <Suspense fallback={<PhotosSkeleton />}>
+                <PhotosGrid />
+            </Suspense>
         </div>
     )
 }
