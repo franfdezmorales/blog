@@ -2,9 +2,12 @@ import { type FC } from 'react'
 import { read } from '@lib/guestbook'
 import { GuestbookEntry } from '@components/GuestbookEntry'
 import { notFound } from 'next/navigation'
+import { unstable_noStore as noStore } from 'next/cache'
 import styles from './styles.module.css'
 
 export const GuestbookEntries: FC = async (): Promise<JSX.Element> => {
+
+    noStore()
 
     const { data: entries, errorCode } = await read()
 

@@ -3,6 +3,7 @@ import Image from "next/image"
 import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 import styles from '@styles/photos.module.css'
+import { unstable_noStore as noStore } from "next/cache"
 
 export const metadata: Metadata = {
     title: 'Fotos',
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Photos() {
+
+    noStore()
 
     const { data: photos, errorCode } = await read()
 
