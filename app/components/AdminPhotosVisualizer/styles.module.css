@@ -37,6 +37,7 @@
 }
 
 .photoText {
+    text-align: center;
     font-size: .75rem;
     color: var(--color-scale-4);
     word-wrap: break-word;

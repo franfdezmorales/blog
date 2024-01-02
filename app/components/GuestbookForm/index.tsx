@@ -2,12 +2,12 @@
 'use client'
 
 import { type FC, useRef, useState } from 'react'
-import { useFormStatus } from 'react-dom'
 import { create } from '@lib/guestbook'
 import { Modal } from '@components/Modal'
 import { LoginButtons } from '@components/LoginButtons'
 import { ERROR_CODE } from '@types'
 import { useLocalStorage } from '@hooks'
+import { SignButton } from './buttonForm'
 import styles from './styles.module.css'
 
 export const GuestbookForm: FC = (): JSX.Element => {
@@ -15,7 +15,6 @@ export const GuestbookForm: FC = (): JSX.Element => {
     const formRef = useRef<HTMLFormElement>(null)
     const [loginVisibility, setLoginVisibility] = useState<boolean>(false)
     const { value: defaulFormValue, updateValue, removeValue } = useLocalStorage('entry')
-    const { pending } = useFormStatus()
 
     const handleClose = () => {
         setLoginVisibility(false)
@@ -48,16 +47,7 @@ export const GuestbookForm: FC = (): JSX.Element => {
                     defaultValue={defaulFormValue}
                     required
                 />
-                <div className={styles.buttonWrapper}>
-                    <button
-                        className={styles.button}
-                        type='submit'
-                        disabled={pending}
-                    >
-                        <span className={styles.buttonText}>Firmar</span>
-                    </button>
-                    <div className={styles.gradient} />
-                </div>
+                <SignButton />
             </form>
             {loginVisibility ?
                 <Modal handleClose={handleClose}>

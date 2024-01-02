@@ -5,6 +5,10 @@
     cursor: pointer;
 }
 
+.submitButton:disabled {
+    cursor: default;
+}
+
 .icon {
     opacity: .75;
     color: red;
@@ -14,4 +18,20 @@
 
 .submitButton:hover>.icon {
     opacity: 1;
+}
+
+.loading {
+    opacity: 1;
+    color: var(--color-scale-3);
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

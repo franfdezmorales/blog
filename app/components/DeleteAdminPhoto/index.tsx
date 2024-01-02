@@ -2,7 +2,7 @@ import { X } from "@phosphor-icons/react/dist/ssr"
 import { type FC } from "react"
 import { deletePhoto } from "@lib/admin"
 import { revalidateTag } from "next/cache"
-import styles from './styles.module.css'
+import { DeleteButton } from "./buttonForm"
 
 interface Props {
     id: string
@@ -16,9 +16,7 @@ export const DeleteAdminPhoto: FC<Props> = ({ id }): JSX.Element => {
             const { data: success } = await deletePhoto(id)
             if (success) revalidateTag('photos')
         }}>
-            <button type='submit' className={styles.submitButton}>
-                <X className={styles.icon} />
-            </button>
+            <DeleteButton />
         </form>
     )
 }
