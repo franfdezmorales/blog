@@ -6,16 +6,9 @@ export const GuestbookEntriesSkeleton: FC = (): JSX.Element => {
 
     return (
         <ul className={styles.entries}>
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
-            <GuestbookEntrySkeleton />
+            {[...Array(10).keys()].map((key) => (
+                <GuestbookEntrySkeleton key={key} />
+            ))}
         </ul>
     )
 }
