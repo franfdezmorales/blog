@@ -21,7 +21,7 @@ export const LoginButtons: FC = (): JSX.Element => {
                 Accede con Discord
             </button>
             <p className={styles.description}>
-                Es necesario iniciar sesión si quieres dejar una firma (para evitar spam), 
+                Es necesario iniciar sesión si quieres dejar una firma (para evitar spam),
                 la unica información que se guarda es el nombre de usuario.
             </p>
         </section>

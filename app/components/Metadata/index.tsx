@@ -2,6 +2,7 @@ import { Suspense, type FC } from 'react'
 import { relativeFormat } from '@utils'
 import { UpdateVisits } from '@components/UpdateVisits'
 import { UpdateVisitsSkeleton } from '@components/UpdateVisits/skeleton'
+import { dateFormat } from "@utils"
 import styles from './styles.module.css'
 
 interface Props {
@@ -11,11 +12,7 @@ interface Props {
 
 export const Metadata: FC<Props> = ({ slug, created_at }): JSX.Element => {
 
-    const formattedDate = new Date(created_at).toLocaleString('es-ES', {
-        month: 'long',
-        year: 'numeric',
-    })
-
+    const formattedDate = dateFormat(created_at, 'es-ES', { month: 'long', year: 'numeric' })
     const relativeDate = relativeFormat(created_at)
 
     return (

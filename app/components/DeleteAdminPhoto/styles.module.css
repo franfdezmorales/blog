@@ -1,0 +1,17 @@
+.submitButton {
+    all: unset;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+.icon {
+    opacity: .75;
+    color: red;
+    font-size: 1.5rem;
+    transition: opacity .2s ease;
+}
+
+.submitButton:hover>.icon {
+    opacity: 1;
+}

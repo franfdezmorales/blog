@@ -1,0 +1,38 @@
+.wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.files {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    list-style: none;
+}
+
+.noFiles {
+    color: var(--color-scale-3);
+}
+
+.form {
+    display: grid;
+    place-content: center;
+}
+
+.uploadButton {
+    background-color: var(--color-scale-2);
+    color: var(--color-scale-3);
+    outline: 1px solid var(--color-scale-3);
+    border: none;
+    border-radius: .25rem;
+    font-size: 1.25rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.uploadButton:disabled {
+    opacity: .75;
+    cursor: default;
+}

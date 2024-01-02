@@ -1,0 +1,55 @@
+.file {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+    color: var(--color-scale-3);
+    background-color: var(--color-scale-2);
+    outline: 1px solid var(--color-scale-3);
+    border-radius: .25rem;
+}
+
+.iconFile {
+    font-size: 1.5rem;
+}
+
+.iconName {
+    flex: 1;
+}
+
+.iconSize {
+    font-size: .75rem;
+}
+
+.file:hover>.deleteWrapper {
+    visibility: visible;
+    opacity: 1;
+}
+
+.deleteWrapper {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: .25rem;
+    background-color: rgba(0, 0, 0, .75);
+    transition: opacity .2 ease;
+    display: grid;
+    place-content: center;
+}
+
+.icon {
+    opacity: .75;
+    font-size: 1.5rem;
+    color: red;
+    transition: opacity .2s ease;
+    cursor: pointer;
+}
+
+.icon:hover {
+    opacity: 1;
+}
