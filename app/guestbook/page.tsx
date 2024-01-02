@@ -10,6 +10,8 @@ export const metadata: Metadata = {
     description: 'Deja tu marca para que los demás la vean'
 }
 
+export const runtime = 'edge'
+
 export default function Guestbook() {
 
     return (
