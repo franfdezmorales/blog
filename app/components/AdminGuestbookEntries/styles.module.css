@@ -1,0 +1,13 @@
+@media only screen and (max-width: 768px) {
+
+    .scrollable {
+        max-width: 100%;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow-x: scroll;
+    }
+
+    .scrollable::-webkit-scrollbar {
+        display: none;
+    }
+}
