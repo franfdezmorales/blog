@@ -1,5 +1,7 @@
 import { CardsContainer } from '@components/CardsContainer'
 import { Rays } from '@components/Rays'
+import { Suspense } from 'react'
+import { LastVisit } from '@components/LastVisit'
 import { SkipRenderOnClient } from '@components/SkipRenderOnClient'
 import styles from '@styles/home.module.css'
 
@@ -17,6 +19,9 @@ export default function Home() {
       <SkipRenderOnClient maxSizeToRender={768}>
         <CardsContainer />
       </SkipRenderOnClient>
+      <Suspense fallback={null}>
+        <LastVisit />
+      </Suspense>
     </div>
   )
 }
