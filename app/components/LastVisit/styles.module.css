@@ -1,0 +1,18 @@
+.text {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: .75rem;
+    color: var(--color-scale-3);
+    animation: fadeIn .5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
