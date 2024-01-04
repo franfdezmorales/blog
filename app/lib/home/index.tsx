@@ -5,6 +5,9 @@ import { kv } from '@vercel/kv'
 export const getLastVisitAndUpdate = async (): Promise<ResponseDefault<string>> => {
 
     try {
+        const response = await fetch(`http://ip-api.com/json/${ip()}`, { cache: 'no-store' })
+        const { city = 'Madrid', country = 'Spain' } = await response.json()
+
         const parsedLastVisit = await kv.get('lastVisit') as string | null
         if (parsedLastVisit) {
             const lastVisit = JSON.parse(parsedLastVisit)
@@ -15,10 +18,13 @@ export const getLastVisitAndUpdate = async (): Promise<ResponseDefault<string>> 
             }
         }
 
+        const stringifiedLastVisit = JSON.stringify({ city, country })
+        kv.set('lastVisit', stringifiedLastVisit)
+
         return {
             errorCode: null,
             errorMessage: null,
-            data: `Madrid, Spain`
+            data: `${city}, ${country}`
         }
     } catch (err) {
         return {
@@ -26,12 +32,5 @@ export const getLastVisitAndUpdate = async (): Promise<ResponseDefault<string>> 
             errorMessage: err as string,
             data: null
         }
-    }
-
-    finally {
-        const response = await fetch(`http://ip-api.com/json/${ip()}`)
-        const { city = 'Madrid', country = 'Spain' } = await response.json()
-        const stringifiedLastVisit = JSON.stringify({ city, country })
-        kv.set('lastVisit', stringifiedLastVisit)
     }
 }
