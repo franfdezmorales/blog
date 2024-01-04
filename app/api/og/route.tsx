@@ -1,3 +1,4 @@
+import { host } from '@utils';
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge';
@@ -20,7 +21,7 @@ export async function GET(req: Request) {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     justifyContent: 'center',
-                    backgroundImage: 'url(https://franfdezmorales.com/utility/og-background.jpeg)'
+                    backgroundImage: `url(${host()}/utility/og-background.jpeg)`
                 }}
             >
                 <div
