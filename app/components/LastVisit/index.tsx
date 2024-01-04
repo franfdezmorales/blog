@@ -5,13 +5,11 @@ import styles from './styles.module.css'
 
 export const LastVisit: FC = async (): Promise<JSX.Element> => {
 
-    const { data: lastVisit, errorCode } = await getLastVisitAndUpdate()
-
-    if (!lastVisit || errorCode) notFound()
+    const { data: lastVisit } = await getLastVisitAndUpdate()
 
     return (
         <span className={styles.text}>
-            {`Última visita desde ${lastVisit}`}
+            {`Última visita desde ${lastVisit ?? 'Madrid, Spain'}`}
         </span>
     )
 }
