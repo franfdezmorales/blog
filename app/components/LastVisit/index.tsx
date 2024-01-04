@@ -1,9 +1,11 @@
 import { type FC } from 'react'
 import { getLastVisitAndUpdate } from '@lib/home'
-import { notFound } from 'next/navigation'
+import { unstable_noStore as noStore } from 'next/cache'
 import styles from './styles.module.css'
 
 export const LastVisit: FC = async (): Promise<JSX.Element> => {
+
+    noStore()
 
     const { data: lastVisit } = await getLastVisitAndUpdate()
 
