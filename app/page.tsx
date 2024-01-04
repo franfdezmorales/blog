@@ -1,5 +1,6 @@
 import { CardsContainer } from '@components/CardsContainer'
 import { Rays } from '@components/Rays'
+import { SkipRenderOnClient } from '@components/SkipRenderOnClient'
 import styles from '@styles/home.module.css'
 
 export default function Home() {
@@ -13,7 +14,9 @@ export default function Home() {
           Actualmente trabajando en <span className={styles.highlighted}>OHTIC</span>.
         </h1>
       </section>
-      <CardsContainer />
+      <SkipRenderOnClient maxSizeToRender={768}>
+        <CardsContainer />
+      </SkipRenderOnClient>
     </div>
   )
 }
