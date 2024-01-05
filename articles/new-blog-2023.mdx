@@ -1,0 +1,133 @@
+---
+title: "Actualización del blog"
+created_at: "01/05/2024"
+---
+
+A finales del año pasado decidí que era necesario actualizar mi web debido a varios factores:
+    - Estaba escrita en **javascript**.
+    - Cambios en la **API de twitter**. 
+    - **Complejidad** para añadir nuevos artículos.
+
+Estos 3 factores fueron la clave para decidirme a rehacer todo lo relacionado a la web, también hubo factores menores
+como **cambios de diseño**, cambios considerables en las **tecnologías** que usaba, **SEO** no adecuado y más en los que 
+no nos centraremos debido a que no fueron decisivos.
+
+## De javascript a typescript
+
+Cuando empecé a hacer la antigua web, aún no había dado el salto personal de usar [typescript](https://www.typescriptlang.org/) 
+sobre javascript, lo usaba en **proyectos simples** y nunca tenía la sensación de que necesitaba el **tipado**. 
+Esto cambió a medida que  los proyectos iban **creciendo**, cada vez era mas complejo recordar 
+que contenía un objeto o no contemplar situaciones que podían darse y **alterar** los datos que debería que recibir.
+
+Con el cambio, se pueden hacer **refactorizaciones** muchísimo más **rápido** y **seguras**, también no es necesario estar constantemente
+navegando entre los ficheros para recordar que me devolvía una función y si habría alguna posibilidad de que hubiera un factor
+que modificara mis datos.
+
+## De twitter a X y sus respectivos cambios en la API 
+
+La compra de [twitter](https://twitter.com/) por parte de [Elon Musk](https://twitter.com/elonmusk) trajo bastantes cambios, 
+uno de ellos fue en su API, principalmente en su **precio**. 
+
+Para poner en contexto, su uso en la web era mínimo, tan solo recogía los tweets que tenía **guardados** en marcadores, 
+esto lo hacía siempre que  los **actualizaba**, de lo contrario devolvía el resultado que tenía guardado de la última vez, 
+sabiendo esto, el proceso de actualizar se hacía **una o 2 veces por mes**, algo que es muy poco. 
+La API permitia hasta **1000 peticiones cada minuto** mientras que este proceso significaba **2 peticiones por mes**, que haciendo cálculos, 
+era un **0,00013%** de su uso máximo.
+
+Antes, la API era **gratuita**, tras la compra pasó a costar **100 dólares mensuales**, que con el contexto en conocimiento, es un precio excesivo 
+para el uso que le daba por mi parte. Esto hizo que tuviera que cambiar el contenido de una página entera dejándola **sin uso**.
+
+## El infierno de crear un nuevo artículo
+
+Con el paso del tiempo, fui añadiendo **nuevas funcionalidades** como [breadcrumbs](https://carbondesignsystem.com/components/breadcrumb/usage/), 
+conteo de visitas o una barrita de progreso de lectura. 
+
+Un **mal diseño** junto una **mala implementación**, hizo que cada vez que creara un nuevo post, 
+tuviera que actualizar muchísimas configuraciones, añadiera nuevos metadatos y un sinfín de procesos que si olvidaba
+alguno hacía que no funcionara correctamente la web.
+
+## Cambios, cambios y más cambios
+
+La nueva web se ha hecho con un objetivo en mente, **simplificar** todo para que sean unos pocos clicks lo único que haya que hacer
+para que se pueda actualizar. Con esto como **primera prioridad**, la **segunda prioridad** ha sido el **rendimiento**, quería que la web cargara
+de manera instantánea y que la navegación fuera lo más fuida posible. Por último, **la tercera prioridad** ha sido el **diseño**, quería que se 
+compartiera a lo largo de la web, fuera agradable visualmente, simple y con detalles.
+
+    ### Sencillez 
+
+    Para crear un nuevo post, tan solo tengo que crear un nuevo archivo `.mdx`, todo lo demás se genera automáticamente, tanto
+    los **datos del SEO**, la **metadata**, el **conteo de visitas** y más datos necesarios para que se pueda hacer un **indexado** correcto en 
+    los motores de búsqueda.
+
+    En cuanto a las funciones del guestbook y de las fotos, he creado una página de administración para poder añadir, editar y borrar
+    los contenidos desde cualquier sitio en el que tenga acceso a internet.
+
+    Como he implementado la idea en el código se puede ver en [Github](https://github.com/franfdezmorales/blog/tree/master/app/lib).
+
+    ### Rendimiento 
+
+    La web está construida sobre el directorio `app` de [Next.js](https://nextjs.org/docs/app), usando los 
+    [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) por defecto.
+
+    También utilizo diferentes métodos para evitar el renderizado en servidor de componentes que son puramente en cliente, con esto, 
+    evitamos que el servidor tenga que perder el tiempo en prerendizar y directamente se inicien cuando el cliente ha cargado. Dejo por
+    aquí como lo he conseguido: 
+
+    ```jsx
+    //hooks/useFirstRender
+    import { useRef } from "react"
+
+    const useFirstRender = (): boolean => {
+        const isFirst = useRef<boolean>(true)
+
+        if (isFirst.current) {
+            isFirst.current = false
+            return true
+        } else {
+            return false
+        }
+    }
+
+    export default useFirstRender
+
+    //components/SkipRenderOnClient
+    'use client'
+    import { useFirstRender } from '@hooks'
+    import { type ReactNode, type FC, useId } from 'react'
+
+    interface Props {
+        children: ReactNode
+        maxSizeToRender: number
+    }
+
+    export const SkipRenderOnClient: FC<Props> = ({ children, maxSizeToRender }): JSX.Element => {
+
+        const id = useId()
+        const isClient = typeof window !== 'undefined'
+        const isFirstRender = useFirstRender()
+
+        if (isClient && isFirstRender && window.innerWidth > maxSizeToRender === false) {
+            const el = document.getElementById(id)
+            if (el) el.innerHTML = ''
+        }
+
+        const shouldRender = isClient ? window.innerWidth > maxSizeToRender : true
+
+        return (
+            <div id={id}>{shouldRender ? children : null}</div>
+        )
+    }
+    ```
+## Conclusión
+
+Quizás no es necesario tanta "tecnología" ni muchas funciones para mejorar el rendimiento, tampoco tener 2 bases de datos para una web personal,
+para mí el principal motivo ha sido disfrutar mientas pensaba en cómo poder mejorar lo que ya estaba hecho, el resolver problemas es algo
+a lo que nos enfrentamos todos los días y este no iba a ser menos.
+
+*Todo lo descrito anteriormente se puede ver en el [repositorio de Github](https://github.com/franfdezmorales/blog/), es de código abierto.*
+
+
+
+
+
+
