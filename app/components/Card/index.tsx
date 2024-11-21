@@ -8,19 +8,18 @@ import { type Icon } from '@phosphor-icons/react'
 interface Props {
     id: string,
     title: string,
-    enterprise: string, 
-    startDate: string, 
-    finishDate: string, 
-    description: string, 
-    stack: string[], 
-    Icon: Icon, 
-    bottom: string, 
+    enterprise: string,
+    startDate: string,
+    finishDate: string,
+    stack: string[],
+    Icon: Icon,
+    bottom: string,
     left: string
 }
 
 const dragTransition: InertiaOptions = { timeConstant: 50, power: 0.1 };
 
-export const Card: ForwardRefExoticComponent<Props & RefAttributes<HTMLDivElement>> = forwardRef<HTMLDivElement, Props>(({ id, title, enterprise, startDate, finishDate, description, stack, Icon, bottom, left }, ref) => {
+export const Card: ForwardRefExoticComponent<Props & RefAttributes<HTMLDivElement>> = forwardRef<HTMLDivElement, Props>(({ id, title, enterprise, startDate, finishDate, stack, Icon, bottom, left }, ref) => {
 
     const variants: Variants = useMemo(() => {
         return {
@@ -63,7 +62,6 @@ export const Card: ForwardRefExoticComponent<Props & RefAttributes<HTMLDivElemen
                     <h3 className={styles.informationText}>{enterprise}</h3>
                     <h3 className={styles.informationText}>{`${startDate} - ${finishDate}`}</h3>
                 </section>
-                <p className={styles.description}>{description}</p>
             </section>
             <section className={styles.cardSection}>
                 <p className={styles.stack}>STACK: <span className={styles.stacks}>{stack.join(', ')}</span></p>
