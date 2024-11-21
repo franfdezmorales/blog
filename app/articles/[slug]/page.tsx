@@ -4,8 +4,9 @@ import { type Metadata as MetadataNext } from "next";
 import { notFound } from "next/navigation";
 import styles from '@styles/article.module.css'
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<MetadataNext | undefined> {
-    const { data: article } = await getArticleBySlug(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<MetadataNext | undefined> {
+    const readOnlyParams = await params
+    const { data: article } = await getArticleBySlug(readOnlyParams.slug)
 
     if (!article) {
         return;
