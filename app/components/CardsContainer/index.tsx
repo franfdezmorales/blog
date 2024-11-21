@@ -6,32 +6,20 @@ import styles from './styles.module.css'
 
 const EXPERIENCE_DATA = [
     {
-        id: "4",
-        title: "Desarrollador fullstack",
-        enterprise: "franfdezmorales.com",
-        startDate: "03/2022",
-        finishDate: "??",
-        description: "Desarrollo de la web y de todos los servicios necesarios para su funcionalidad, también el escrito de los artículos del blog.",
-        stack: ["REACT", "NEXTJS", "TYPESCRIPT", "EDGE FUNCTIONS", "CSS MODULES", "FRAMER"],
-        Icon: AppWindow
-    },
-    {
         id: "3",
-        title: "Desarrollador fullstack",
-        enterprise: "maketexteasy.com",
-        startDate: "02/2023",
+        title: "Ingeniero frontend",
+        enterprise: "apipana.io",
+        startDate: "11/2024",
         finishDate: "??",
-        description: "Desarrollo de la aplicación, tanto la UI como el servicio para poder generar los textos a través de la IA.",
-        stack: ["REACT", "NEXTJS", "OPENAI", "EDGE FUNCTIONS", "CSS MODULES"],
-        Icon: AppWindow
+        stack: ["REACT", "NEXTJS", "TYPESCRIPT", "PANDACSS", "DOCKER", "STORYBOOK", "TURBOREPO"],
+        Icon: Briefcase
     },
     {
         id: "2",
         title: "Desarrollador de software",
         enterprise: "OHTIC",
         startDate: "12/2022",
-        finishDate: "??",
-        description: "Desarrollo de diferentes aplicaciones web multifunción usando nuevas tecnologías y eligiendo los mejores servicios dependiendo del contexto.",
+        finishDate: "11/2024",
         stack: ["REACT", "NEXTJS", "AZURE", "OPENAI", "EDGE FUNCTIONS", "TYPESCRIPT", "CSS MODULES", "DOCKER"],
         Icon: Briefcase
     },
@@ -41,7 +29,6 @@ const EXPERIENCE_DATA = [
         enterprise: "T-Systems",
         startDate: "02/2022",
         finishDate: "12/2022",
-        description: "Desarrollo de diferentes frontales para herramientas internas sobre control de stock y gestión de artículos usados por grandes compañías.",
         stack: ["REACT", "TYPESCRIPT", "VITE", "NEXTJS"],
         Icon: Briefcase
     }
@@ -53,10 +40,9 @@ type ScreenPosition = {
 }
 
 const randomPositions: ScreenPosition[] = [
-    { bottom: '30%', left: '7%' },
-    { bottom: '15%', left: '31%' },
-    { bottom: '24%', left: '51%' },
-    { bottom: '21%', left: '73%' }
+    { bottom: '45%', left: '23%' },
+    { bottom: '32%', left: '45%' },
+    { bottom: '38%', left: '68%' },
 ]
 
 export const CardsContainer: FC = (): JSX.Element | null => {

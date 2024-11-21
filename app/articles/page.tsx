@@ -7,7 +7,9 @@ export const metadata: Metadata = {
     description: 'Encuentra explicaciones y experiencias sobre el mundo web'
 }
 
-export default async function Articles({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function Articles({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+
+    const readOnlySearchParams = await searchParams
 
     return (
         <div className={styles.main}>
@@ -18,7 +20,7 @@ export default async function Articles({ searchParams }: { searchParams: { [key:
                 centrados en javascript y react, también trato temas como el rendimiento,
                 estructuras de datos e incluso estilos.
             </p>
-            <ArticleList sortParams={searchParams} />
+            <ArticleList sortParams={readOnlySearchParams} />
         </div>
     )
 }
