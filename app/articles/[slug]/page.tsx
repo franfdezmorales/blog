@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default async function Article({ params }: { params: { slug: string } }) {
+export default async function Article({ params }: { params: Promise<{ slug: string }> }) {
 
-    const slug = params.slug
-    const { data: article, errorCode } = await getArticleBySlug(slug)
+    const readOnlyParams = await params
+    const { data: article, errorCode } = await getArticleBySlug(readOnlyParams.slug)
 
     if (!article || errorCode) notFound()
 
@@ -59,7 +59,7 @@ export default async function Article({ params }: { params: { slug: string } }) 
                 }}
             />
             <h1 className={styles.title}>{article.title}</h1>
-            <Metadata created_at={article.created_at} slug={slug} />
+            <Metadata created_at={article.created_at} slug={readOnlyParams.slug} />
             <section className={styles.content}>
                 {article.content}
             </section>
