@@ -20,7 +20,7 @@
     "geist": "^1.2.0",
     "next": "^15.0.4-canary.22",
     "next-auth": "^5.0.0-beta.4",
-    "next-mdx-remote": "^4.4.1",
+    "next-mdx-remote": "^5.0.0",
     "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
